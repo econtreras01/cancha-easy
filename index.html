@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+            background-color: #2d683b; /* Fondo verde */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%; /* Ancho del contenedor del formulario */
+            max-width: 400px; /* Ancho máximo del contenedor */
+        }
+
+        form {
+            text-align: center;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff; /* Color azul */
+            color: white; /* Texto blanco */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Cambio de color al pasar el cursor */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form action="/login" method="post">
+            <h2>Iniciar Sesión</h2>
+            <label for="username">Usuario:</label><br>
+            <input type="text" id="username" name="username"><br><br>
+
+            <label for="password">Contraseña:</label><br>
+            <input type="password" id="password" name="password"><br><br>
+
+            <input type="submit" value="Ingresar">
+        </form>
+    </div>
+</body>
+</html>
