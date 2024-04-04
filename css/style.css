@@ -41,14 +41,10 @@ body {
   cursor: pointer;
 }
 
-.logo img {
-  
+.logo img { 
   display: flex;
-  height: 50px;
-  position: absolute;
-  top: 50%; 
-  left: 20%;;
-  transform: translate(70%, -700%);
+  width: 500px;
+  padding-left: 5%;
 }
 
 .recuadro {
