@@ -11,21 +11,28 @@
 </head>
 
 <body>
-    <div class="row text-center justify-content-center mt-4">
-            <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 rounded-4 shadow">
+    <header class="bg-light position-absolute w-100 " style="max-height: 100px;">
+        <img src="../img/icon.svg" class="ps-4 py-2" style="max-height: 100px;" alt="">
+    </header>
+    <div class="row text-center justify-content-center m-0 h-100 align-items-center">
+        <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light">
             <header>
                 <h2 class="mb-3">Iniciar sesión</h2>
-                <div class="opacity-75 h6 text-start "><p class="mb-2">¡Bienvenido a Cancha-easy! </p><p>Por favor, ingresa tus datos</p></div>
+                <div class="opacity-75 h6 text-start ">
+                    <p class="mb-2">¡Bienvenido a Cancha-easy! </p>
+                    <p class="m-0">Por favor, ingresa tus datos</p>
+                </div>
             </header>
             <main>
-                <form class="text-start">
+                <form class="text-start" action="">
                     <div class="email my-2">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" class="form-control rounded-5">
+                        <label for="email" class="my-2">Correo electrónico</label>
+                        <input type="email" id="email"
+                            class="form-control p-2 p-xxl-3 rounded-5 m-0 shadow-none border">
                     </div>
                     <div class="password">
-                        <label for="email">Contraseña</label>
-                        <input type="password" class="form-control rounded-5">
+                        <label for="email" class="my-2">Contraseña</label>
+                        <input type="password" class="form-control p-2 p-xxl-3 rounded-5 m-0 shadow-none border">
                     </div>
                     <div class="recordar d-flex justify-content-between my-3">
                         <div class="my-2">
