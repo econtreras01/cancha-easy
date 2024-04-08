@@ -3,7 +3,7 @@ body {
   padding: 0;
   background: linear-gradient(150deg, #355020, #94E058, #1a3306);
   background-attachment: fixed;
-  height: 110vh;
+  height: 100vh;
 }
 
 input[type="submit"] {
@@ -25,6 +25,14 @@ input[type="submit"] {
 }
 
 
+.container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh; 
+  position: relative; 
+}
+
 .eleccion {
   position: absolute;
   top: 50%;
@@ -33,6 +41,7 @@ input[type="submit"] {
   width: 80%;
   background: white;
   border-radius: 10px;
+  padding: 50px;
 }
 
 .eleccion h2 {
@@ -41,23 +50,22 @@ input[type="submit"] {
   border-bottom: 1px solid silver;
 }
 
-.botones{
+.botones {
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 50px;
 }
 
-.eleccion button {
+.eleccion input {
   border: none;
   outline: none;
-  height: 40px;
-  width: 100px;
-  background: #94E058;
+  height: 80px;
+  width: 150px;
+  background: #1e90d3;
   color: white;
   font-size: 20px;
   border-radius: 10px;
-  cursor: pointer;
 }
 
 .logo img { 
