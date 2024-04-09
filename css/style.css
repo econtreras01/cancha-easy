@@ -199,9 +199,6 @@ body {
   border: none;
   outline: none;
   height: 50px;
-  width: 
-
-  
 }
 
 .btn2{
@@ -227,6 +224,19 @@ height: 50px;
 
 .container {
   background-color: rgb(234, 235, 236);
-  width: 40%;
+  width: 50%;
+  border-radius: 10%;
+  height: 35%;
+}
+
+.container3 {
+  background-color: rgb(234, 235, 236);
+  width: 60%;
+  border-radius: 10%;
+
+}
+.container5 {
+  background-color: rgb(234, 235, 236);
+  width: 60%;
   border-radius: 10%;
 }
