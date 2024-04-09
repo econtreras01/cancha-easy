@@ -224,3 +224,9 @@ outline: none;
 height: 50px;
 
 }
+
+.container {
+  background-color: rgb(234, 235, 236);
+  width: 40%;
+  border-radius: 10%;
+}
