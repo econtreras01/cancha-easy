@@ -4,6 +4,7 @@ body {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   background: linear-gradient(150deg, #3C5B24, #94E058);
   height: 100vh;
+  background-attachment: fixed;
 }
 
 .eleccion {
@@ -223,4 +224,13 @@ border: none;
 outline: none;
 height: 50px;
 
+}
+
+.header0{
+  background-color: white;
+  height:120px;
+}
+
+.logo0{
+  transform: translate(20%,-10%);
 }
