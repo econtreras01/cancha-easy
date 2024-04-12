@@ -5,15 +5,15 @@ body {
   background-attachment: fixed;
   height: 100vh;
   background-attachment: fixed;
-}
+} /*Ajustes del fondo*/
 
 nav {
   max-height: 100px;
 }
 
-.eleccion {
+.eleccion { /*Caja de elección*/
   position: absolute;
-  top: 50%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -27,14 +27,14 @@ nav {
   border-bottom: 1px solid silver;
 }
 
-.botones{
+.botones{ /*Botones de elección*/
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 50px;
 }
 
-.eleccion button {
+.eleccion button { /*Botones de elección deportes*/
   border: none;
   outline: none;
   height: 90px;
@@ -45,6 +45,8 @@ nav {
   border-radius: 10px;
   cursor: pointer;
 }
+/*Ajustes varios*/
+/*Pregunten antes de borrar algo*/
 
 .recuadro {
   position: absolute;
