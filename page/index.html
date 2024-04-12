@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cancha-easy!</title>
-</head>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head><!--Links de bootstrap y del CSS-->
+
 <body>
-    <div class="formulario">
-        <header>
-        <h1>INICIAR SESIÓN</h1>
-        <h5>¡Bienvenido a Cancha-easy!<br>Por favor, ingresa tus datos</h5>
-        </header>
-        <main>
-            <form action="/login" method="post">
-                <div class="email">
-                    <input type="text" required>
-                    <label>Correo electrónico</label>
+    <nav class="nav bg-light position-absolute row justify-content-between flex-nowrap m-0 w-100">
+        <div class="col-auto col-md-3 flex-shrink-1 flex-grow-0 p-0 p-sm-2">
+            <img class="py-3 ps-1 ps-sm-2 img-fluid h-100" src="../img/icon.svg" alt="">
+        </div>
+    </nav>
+    <div class="row text-center justify-content-center m-0 h-100 align-items-center">
+        <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light mt-5">
+            <header>
+                <h2 class="mb-3">Iniciar sesión</h2>
+                <div class="opacity-75 h6 text-start ">
+                    <p class="mb-2">¡Bienvenido a Cancha-easy! </p>
+                    <p class="m-0">Por favor, ingresa tus datos</p>
                 </div>
-                <div class="password">
-                    <input type="password" required>
-                    <label>Contraseña</label>
-                </div>
-                <div class="recordar">
-                    <input type="checkbox">Recuerdame
-                    <input type="submit" value="Ingresar">
-                </div>
-                <div>
-                    ¿No tienes cuenta?<a href="registro.html">Registrate aquí</a><br>
+            </header>
+            <main>
+                <form class="text-start" action="deportes.html">
+                    <div class="my-2">
+                        <label for="email" class="my-2">Correo electrónico</label>
+                        <input type="email" id="email" class="form-control p-2 rounded-5 m-0 shadow-none border">
+                    </div>
+                    <div>
+                        <label for="email" class="my-2">Contraseña</label>
+                        <input type="password" class="form-control p-2 rounded-5 m-0 shadow-none border">
+                    </div>
+                    <div class="recordar d-flex justify-content-between my-3">
+                        <div class="my-2">
+                            <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
+                        </div>
+                        <input class="btn btn-primary px-4 rounded-5" type="submit" value="Ingresar">
+                    </div>
+                </form>
+                <div class="my-3">
+                    <span>¿No tienes cuenta?</span><a href="registro.html"> Registrate aquí</a><br>
                     <a href="recuperar_password.html">Olvidé mi contraseña</a>
                 </div>
-            </form>
-        </main>
+            </main>
+        </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
