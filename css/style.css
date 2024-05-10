@@ -259,38 +259,94 @@ th {
 }
 
 /* Clases para responsive */
-@media (max-width: 768px) {
-  .recuadro {
-    width: 90%;
+
+*{
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.nave{
+  background: #3da5af;
+  height: 80px;
+  width: 100%;
+}
+.enlace{
+  position: absolute;
+  padding: 20px 50px;
+}
+.logo{
+  height: 40px;
+}
+.nave ul{
+  float: right;
+  margin-right: 20px;
+}
+.nave ul li{
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+.nave ul li a{
+  color: #fff;
+  font-size: 18px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+.checkbtn{
+  font-size: 30px;
+  color: #fff;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  display: none;
+}
+#check{
+  display: none;
+}
+
+
+@media (max-width: 952px){
+  .enlace{
+      padding-left: 20px;
   }
-  .recuadro .nombre {
-    margin: 20px 0;
-  }
-  .recuadro .apellido {
-    margin: 20px 0;
-  }
-  .recuadro .email {
-    margin: 20px 0;
-  }
-  .recuadro .password {
-    margin: 20px 0;
+  nav ul li a{
+      font-size: 16px;
   }
 }
 
-@media (max-width: 480px) {
-  .recuadro {
-    width: 80%;
+@media (max-width: 858px){
+  .checkbtn{
+      display: block;
   }
-  .recuadro .nombre {
-    margin: 10px 0;
+  ul{
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: #2c3e50;
+      top: 80px;
+      left: -100%;
+      text-align: center;
+      transition: all .5s;
   }
-  .recuadro .apellido {
-    margin: 10px 0;
+  .nave ul li{
+      display: block;
+      margin: 50px 0;
+      line-height: 30px;
   }
-  .recuadro .email {
-    margin: 10px 0;
+  .nave ul li a{
+      font-size: 20px;
   }
-  .recuadro .password {
-    margin: 10px 0;
+  li a:hover, li a.active{
+      background: none;
+      color: red;
+  }
+  #check:checked ~ ul{
+      left:0;
   }
 }
