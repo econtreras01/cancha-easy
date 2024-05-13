@@ -9,9 +9,21 @@ var month = now.getMonth();
 var currentMonth = month;
 var year = now.getFullYear();
 
-initCalender(); // Llamada a la función para inicializar el calendario
+$(document).ready(function () {
+    initCalendar(); // Llamada a la función para inicializar el calendario
 
-function initCalender() {
+    // Establecer el evento de clic para el botón de siguiente mes
+    $("#next_month").click(function () {
+        getNextMonth();
+    });
+
+    // Establecer el evento de clic para el botón de mes anterior
+    $("#last_month").click(function () {
+        getPrevMonth();
+    });
+});
+
+function initCalendar() {
     // Establecer el nombre del mes y el año en el calendario
     $("#text_month_02").text(monthName[month]);
     $("#text_year").text(year);
@@ -24,18 +36,25 @@ function initCalender() {
         $(".container_days").append(`<span class="week_days_item item_day prev_days">${getTotalDays(month - 1) - (i - 1)}</span>`);
     }
 
-    // Generar los días del mes actual
-    for (let i = 1; i <= getTotalDays(month); i++) {
-        var $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
-        var currentDate = new Date(year, month, i);
-        if (currentDate < now && (currentDate.getDate() !== day || currentDate.getMonth() !== currentMonth || currentDate.getFullYear() !== now.getFullYear())) {
-            $day.addClass("disabled"); // Deshabilitar días anteriores al día actual, excepto el día actual
-            $day.addClass("todaynot"); // Resaltar los días deshabilitados
-        } else if (currentDate.getDate() === day && currentDate.getMonth() === currentMonth) {
-            $day.addClass("today"); // Resaltar el día actual
+        // Generar los días del mes actual
+        for (let i = 1; i <= getTotalDays(month); i++) {
+            var $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
+            var currentDate = new Date(year, month, i);
+            if (currentDate < now && (currentDate.getDate() !== day || currentDate.getMonth() !== currentMonth || currentDate.getFullYear() !== now.getFullYear())) {
+                $day.addClass("disabled"); // Deshabilitar días anteriores al día actual, excepto el día actual
+                $day.addClass("todaynot"); // Resaltar los días deshabilitados
+            } else if (currentDate.getDate() === day && currentDate.getMonth() === currentMonth) {
+                // Resaltar el día actual
+                if (now.getHours() >= 19) {
+                    $day.addClass("todaynot"); // Marcar como todaynot si son pasadas las 19:00
+                    $day.addClass("disabled");
+                    $day.addClass("today");
+                } else {
+                    $day.addClass("today");
+                }
+            }
+            $(".container_days").append($day);
         }
-        $(".container_days").append($day);
-    }
 
 
     // Establecer el evento de clic para cada día del calendario
@@ -64,7 +83,7 @@ function getNextMonth() {
         year++;
         month = 0;
     }
-    initCalender(); // Volver a generar el calendario para el nuevo mes
+    initCalendar(); // Volver a generar el calendario para el nuevo mes
 }
 
 // Función para retroceder al mes anterior
@@ -75,7 +94,7 @@ function getPrevMonth() {
         year--;
         month = 11;
     }
-    initCalender(); // Volver a generar el calendario para el nuevo mes
+    initCalendar(); // Volver a generar el calendario para el nuevo mes
 }
 
 // Función para obtener el día de la semana en que comienza el mes
@@ -104,16 +123,3 @@ function getTotalDays() {
         return leapMonth() ? 29 : 28;
     }
 }
-
-// Establecer el evento de clic para el botón de siguiente mes
-$("#next_month").click(function () {
-    getNextMonth();
-});
-
-// Establecer el evento de clic para el botón de mes anterior
-$("#last_month").click(function () {
-    getPrevMonth();
-});
-
-
-
