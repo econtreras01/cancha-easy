@@ -523,12 +523,4 @@ th {
   display: inline-block;
 }
 
-.btn_guardar {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #506CF5;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
+

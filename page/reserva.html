@@ -29,7 +29,7 @@
         </ul>
     </nav><br>
     <div class="d-flex justify-content-center align-items-center">
-        <div class="rounded-4 shadow bg-light px-5 py-4 my-5 text-center">
+        <div class="rounded-4 shadow bg-light px-5 py-4 text-center">
             <h3 class="m-0">Reserva tu hora</h3>
         </div>
     </div>
@@ -63,13 +63,38 @@
             </div>
             <div class="reserva_info">
                 <div id="reserva_mensaje" class="reserva_mensaje"></div> <!-- Mensaje de reserva -->
-                <button id="guardar_seleccion" class="btn_guardar">Guardar Selección</button> <!-- Botón para guardar la selección -->
+                <button class="btn btn-primary px-4 rounded-5" id="guardarReserva">Guardar Reserva</button>
             </div><br>
         </div>
     </div><br>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/scripts/calendario_script.js"></script>
     <script src="/scripts/horas_script.js"></script>
+    <script src="/scripts/deporte_script.js"></script>
+    <script src="reservaUtils.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Controlador de eventos para el botón "Guardar Reserva"
+            $("#guardarReserva").click(function () {
+                // Obtener el deporte seleccionado
+                var deporteSeleccionado = localStorage.getItem('deporteSeleccionado');
+
+                // Obtener el día seleccionado
+                var diaSeleccionado = selectedDay.toLocaleDateString();
+
+                // Obtener las horas seleccionadas
+                var horasSeleccionadas = selectedHours.slice(); // Hacemos una copia del array para evitar referencias directas
+
+                // Guardar la reserva
+                guardarReserva(deporteSeleccionado, diaSeleccionado, horasSeleccionadas);
+
+                // Limpiar la selección después de guardar la reserva
+                clearSelectedHours();
+                $(".calendar-day").removeClass("selected");
+                selectedDay = null;
+            });
+        });
+    </script>
 </body>
 
 </html>

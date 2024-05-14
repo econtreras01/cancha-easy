@@ -36,41 +36,41 @@ function initCalendar() {
         $(".container_days").append(`<span class="week_days_item item_day prev_days">${getTotalDays(month - 1) - (i - 1)}</span>`);
     }
 
-        // Generar los días del mes actual
-        for (let i = 1; i <= getTotalDays(month); i++) {
-            var $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
-            var currentDate = new Date(year, month, i);
-            if (currentDate < now && (currentDate.getDate() !== day || currentDate.getMonth() !== currentMonth || currentDate.getFullYear() !== now.getFullYear())) {
-                $day.addClass("disabled"); // Deshabilitar días anteriores al día actual, excepto el día actual
-                $day.addClass("todaynot"); // Resaltar los días deshabilitados
-            } else if (currentDate.getDate() === day && currentDate.getMonth() === currentMonth) {
-                // Resaltar el día actual
-                if (now.getHours() >= 19) {
-                    $day.addClass("todaynot"); // Marcar como todaynot si son pasadas las 19:00
-                    $day.addClass("disabled");
-                    $day.addClass("today");
-                } else {
-                    $day.addClass("today");
-                }
+    // Generar los días del mes actual
+    for (let i = 1; i <= getTotalDays(month); i++) {
+        var $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
+        var currentDate = new Date(year, month, i);
+        if (currentDate < now && (currentDate.getDate() !== day || currentDate.getMonth() !== currentMonth || currentDate.getFullYear() !== now.getFullYear())) {
+            $day.addClass("disabled"); // Deshabilitar días anteriores al día actual, excepto el día actual
+            $day.addClass("todaynot"); // Resaltar los días deshabilitados
+        } else if (currentDate.getDate() === day && currentDate.getMonth() === currentMonth) {
+            // Resaltar el día actual
+            if (now.getHours() >= 19) {
+                $day.addClass("todaynot"); // Marcar como todaynot si son pasadas las 19:00
+                $day.addClass("disabled");
+                $day.addClass("today");
+            } else {
+                $day.addClass("today");
             }
-            $(".container_days").append($day);
         }
+        $(".container_days").append($day);
+    }
 
 
     // Establecer el evento de clic para cada día del calendario
     $(".calendar-day").click(function () {
         if ($(this).hasClass("disabled")) return; // Salir si el día está deshabilitado
-        
+
         // Remover la clase "selected" de todos los días y seleccionar solo el día clickeado
         $(".calendar-day").removeClass("selected");
         $(this).addClass("selected");
-        
+
         var date = new Date(year, month, parseInt($(this).text())); // Crear objeto de fecha
         var dateString = date.toISOString().slice(0, 10); // Convertir la fecha a una cadena ISO
-        
+
         selectedDates = []; // Reiniciar el array de fechas seleccionadas
         selectedDates.push(dateString); // Agregar la fecha seleccionada al array
-        
+
         console.log("Selected date:", dateString); // Mostrar la fecha seleccionada en la consola
     });
 }
@@ -123,3 +123,5 @@ function getTotalDays() {
         return leapMonth() ? 29 : 28;
     }
 }
+
+

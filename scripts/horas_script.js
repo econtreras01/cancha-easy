@@ -51,12 +51,7 @@ $(document).ready(function () {
         $("#reserva_mensaje").text(mensaje);
     }
 
-    // Función para guardar la selección de horas
-    $("#guardar_seleccion").click(function () {
-        // Aquí puedes enviar los datos al servidor o hacer lo que necesites con las horas seleccionadas
-        console.log("Día seleccionado:", selectedDay);
-        console.log("Horas seleccionadas:", selectedHours);
-    });
+
 
     // Función para limpiar las horas seleccionadas
     function clearSelectedHours() {
