@@ -1,49 +1,14 @@
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
 body {
   margin: 0;
   padding: 0;
   background: linear-gradient(150deg, #355020, #94E058, #1a3306);
   background-attachment: fixed;
-  height: 100vh;
-  background-attachment: fixed;
-}
-
-nav {
-  max-height: 100px;
-}
-
-.eleccion {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  background: white;
-  border-radius: 10px;
-}
-
-.eleccion h2 {
-  text-align: center;
-  padding: 0 0 20px 0;
-  border-bottom: 1px solid silver;
-}
-
-.botones {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 50px;
-}
-
-.eleccion button {
-  border: none;
-  outline: none;
-  height: 90px;
-  width: 130px;
-  background: white;
-  color: white;
-  font-size: 20px;
-  border-radius: 10px;
-  cursor: pointer;
 }
 
 .recuadro {
@@ -260,20 +225,6 @@ th {
 
 /* Css para responsive encabezado */
 
-* {
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  list-style: none;
-  box-sizing: border-box;
-}
-
-.nave {
-  background: #3aa4ad;
-  height: 80px;
-  width: 100%;
-}
-
 .enlace {
   position: absolute;
   padding: 20px 50px;
@@ -281,25 +232,6 @@ th {
 
 .logo {
   height: 40px;
-}
-
-.nave ul {
-  float: right;
-  margin-right: 20px;
-}
-
-.nave ul li {
-  display: inline-block;
-  line-height: 80px;
-  margin: 0 5px;
-}
-
-.nave ul li a {
-  color: #fff;
-  font-size: 18px;
-  padding: 7px 13px;
-  border-radius: 3px;
-  text-transform: uppercase;
 }
 
 .checkbtn {
@@ -343,16 +275,6 @@ th {
     transition: all .5s;
   }
 
-  .nave ul li {
-    display: block;
-    margin: 50px 0;
-    line-height: 30px;
-  }
-
-  .nave ul li a {
-    font-size: 20px;
-  }
-
   li a:hover,
   li a.active {
     background: none;
@@ -366,10 +288,6 @@ th {
 
 
 /* Css para calendario */
-
-
-
-
 
 .container_calendar {
   max-height: 600px;
