@@ -15,21 +15,9 @@
 <body> <!--Encabezado y logo-->
     <nav class="navbar navbar-expand-md bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="inicio.html">
                 <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active mx-2" aria-current="page" href="deportes.html">Deportes</a>
-                    <a class="nav-link mx-2" href="mireserva.html">Mis reservas</a>
-                    <a class="nav-link mx-2" href="perfil.html">Mi perfil</a>
-                    <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
-                </div>
-            </div>
         </div>
     </nav>
     <div class="row text-center justify-content-center m-0 h-100 align-items-center">
@@ -50,13 +38,15 @@
                     </div>
                     <div>
                         <label for="email" class="my-2">Contraseña</label>
-                        <input type="password" class="form-control p-2 rounded-5 m-0 shadow-none border" required>
+                        <input type="password" id="password" class="form-control p-2 rounded-5 m-0 shadow-none border"
+                            required>
                     </div>
                     <div class="recordar d-flex justify-content-between my-3">
                         <div class="my-2">
                             <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
                         </div>
-                        <input class="btn btn-primary px-4 rounded-5" type="submit" value="Ingresar">
+                        <input id="ingresarBtn" class="btn btn-primary px-4 rounded-5" type="submit" value="Ingresar"
+                            disabled>
                     </div>
                 </form>
                 <div class="my-3">
@@ -69,6 +59,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>        // Declaración de variables para verificar errores en el formulario
+        let errorCorreo = true;
+        let errorPassword = true;
+        let regexMail =
+            /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+
+        const ingresarBtnHTML = $("#ingresarBtn");
+        const mailHTML = $("#email");
+        const passHTML = $("#password")
+        mailHTML.keyup(function () {
+            if (regexMail.test(mailHTML.val())) {
+                mailHTML.removeClass("is-invalid");
+                errorCorreo = false;
+            } else {
+                mailHTML.addClass("is-invalid");
+                errorCorreo = true;
+            }
+        });
+
+        passHTML.keyup(function () {
+            if (passHTML.val().length < 5 || !passHTML) {
+                passHTML.addClass("is-invalid");
+                errorPassword = true
+            } else {
+                passHTML.removeClass("is-invalid");
+                errorPassword = false
+            }
+        });
+
+        $("form").keyup(function () {
+            if (!errorCorreo && !errorPassword) {
+                ingresarBtnHTML.attr("disabled", false)
+            } else {
+                ingresarBtnHTML.attr("disabled", true)
+            }
+        })
+
+    </script>
 </body>
 
 </html>

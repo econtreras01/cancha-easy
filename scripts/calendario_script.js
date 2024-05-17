@@ -1,13 +1,13 @@
-var monthName = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+let monthName = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
     "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
-var selectedDates = []; // Array para almacenar las fechas seleccionadas
+let selectedDates = []; // Array para almacenar las fechas seleccionadas
 
-var now = new Date();
-var day = now.getDate();
-var month = now.getMonth();
-var currentMonth = month;
-var year = now.getFullYear();
+let now = new Date();
+let day = now.getDate();
+let month = now.getMonth();
+let currentMonth = month;
+let year = now.getFullYear();
 
 $(document).ready(function () {
     initCalendar(); // Llamada a la función para inicializar el calendario
@@ -38,8 +38,8 @@ function initCalendar() {
 
     // Generar los días del mes actual
     for (let i = 1; i <= getTotalDays(month); i++) {
-        var $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
-        var currentDate = new Date(year, month, i);
+        let $day = $(`<span class="week_days_item item_day calendar-day">${i}</span>`);
+        let currentDate = new Date(year, month, i);
         if (currentDate < now && (currentDate.getDate() !== day || currentDate.getMonth() !== currentMonth || currentDate.getFullYear() !== now.getFullYear())) {
             $day.addClass("disabled"); // Deshabilitar días anteriores al día actual, excepto el día actual
             $day.addClass("todaynot"); // Resaltar los días deshabilitados
@@ -65,8 +65,8 @@ function initCalendar() {
         $(".calendar-day").removeClass("selected");
         $(this).addClass("selected");
 
-        var date = new Date(year, month, parseInt($(this).text())); // Crear objeto de fecha
-        var dateString = date.toISOString().slice(0, 10); // Convertir la fecha a una cadena ISO
+        let date = new Date(year, month, parseInt($(this).text())); // Crear objeto de fecha
+        let dateString = date.toISOString().slice(0, 10); // Convertir la fecha a una cadena ISO
 
         selectedDates = []; // Reiniciar el array de fechas seleccionadas
         selectedDates.push(dateString); // Agregar la fecha seleccionada al array
@@ -99,7 +99,7 @@ function getPrevMonth() {
 
 // Función para obtener el día de la semana en que comienza el mes
 function startDay() {
-    var start = new Date(year, month, 1);
+    let start = new Date(year, month, 1);
     return ((start.getDate() - 1) === -1) ? 6 : start.getDay();
 }
 
@@ -112,7 +112,7 @@ function leapMonth() {
 function getTotalDays() {
     if (month === -1) month = 11;
 
-    var numMonthReal = month + 1;
+    let numMonthReal = month + 1;
 
     if (numMonthReal == 3 || numMonthReal == 5 || numMonthReal == 8 || numMonthReal == 10) {
         return 31;

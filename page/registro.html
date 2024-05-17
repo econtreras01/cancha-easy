@@ -14,7 +14,7 @@
 <body> <!--Encabezado y logo-->
     <nav class="navbar navbar-expand-md bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="inicio.html">
                 <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -66,7 +66,8 @@
                         <div class="my-2">
                             <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
                         </div>
-                        <input class="btn btn-primary px-4 rounded-5" type="submit" value="Ingresar">
+                        <input disabled id="ingresarBtn" class="btn btn-primary px-4 rounded-5" type="submit"
+                            value="Ingresar">
                     </div>
                 </form>
                 <div class="my-3">
@@ -81,15 +82,20 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        let errorNombreOApellido = true;
+        // Declaración de variables para verificar errores en el formulario
+        let errorNombre = true;
+        let errorApellido = true;
         let errorCorreo = true;
         let errorPassword = true;
         let regexMail =
             /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
 
-        const boton = $("");
+        const ingresarBtnHTML = $("#ingresarBtn");
         const mailHTML = $("#email");
-        mailHTML.focusout(function () {
+        const nombreHTML = $("#nombre");
+        const apellidoHTML = $("#apellido");
+        const passHTML = $("#password")
+        mailHTML.keyup(function () {
             if (regexMail.test(mailHTML.val())) {
                 mailHTML.removeClass("is-invalid");
                 errorCorreo = false;
@@ -99,10 +105,47 @@
             }
         });
 
-        $("nombre").keyup(function () { })
+        nombreHTML.keyup(function () {
+            if (nombreHTML.val().length === 0 && apellidoHTML.val().length) {
+                nombreHTML.addClass("is-invalid");
+                errorNombre = true
+            } else {
+                nombreHTML.removeClass("is-invalid");
+                errorNombre = false
+            }
+        })
 
-        $("password").keyup(function () { });
+        apellidoHTML.keyup(function () {
+            if (apellidoHTML.val().length === 0 || !apellidoHTML) {
+                apellidoHTML.addClass("is-invalid");
+                errorApellido = true
+            } else {
+                apellidoHTML.removeClass("is-invalid");
+                errorApellido = false
+            }
+        })
 
+        passHTML.keyup(function () {
+            if (passHTML.val().length < 5 || !passHTML) {
+                passHTML.addClass("is-invalid");
+                errorPassword = true
+            } else {
+                passHTML.removeClass("is-invalid");
+                errorPassword = false
+            }
+        });
+
+        $("form").keyup(function () {
+            if (!errorCorreo && !errorNombre && !errorApellido && !errorPassword) {
+                ingresarBtnHTML.attr("disabled", false)
+            } else {
+                ingresarBtnHTML.attr("disabled", true)
+            }
+        })
+
+        ingresarBtnHTML.click(function () {
+            localStorage.setItem("auth", "true")
+        })
     </script>
 </body>
 

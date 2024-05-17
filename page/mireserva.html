@@ -1,55 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cancha-easy!</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <title>Cancha-easy!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head> <!--Links de bootstrap y del CSS-->
 
 <body> <!--Encabezado y logo-->
-  <nav class="navbar navbar-expand-md bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active mx-2" aria-current="page" href="deportes.html">Deportes</a>
-          <a class="nav-link mx-2" href="mireserva.html">Mis reservas</a>
-          <a class="nav-link mx-2" href="perfil.html">Mi perfil</a>
-          <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="inicio.html">
+                <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link active mx-2" aria-current="page" href="deportes.html">Deportes</a>
+                    <a class="nav-link mx-2" href="mireserva.html">Mis reservas</a>
+                    <a class="nav-link mx-2" href="perfil.html">Mi perfil</a>
+                    <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
-  <div class="row my-auto text-center justify-content-center m-0 h-100 align-items-center">
-    <div class="col-auto bg-light p-4 rounded-4 shadow">
-      <div class="row text-center justify-content-center m-0 h-0 align-items-center">
-        <div>
-          <h2 class="mb-3">¡Cancha reservada exitosamente!</h2>
-          <p>Código de reserva: 485831G</p>
-          <p>Nombre del reservante: Luis Aránguiz</p>
-          <p>Fecha: 20 de marzo</p>
-          <p>Hora de inicio: 20:00</p>
-          <p>Hora de término: 21:00</p>
+    </nav>
+    <div class="row text-center justify-content-center m-0 h-100 align-items-center">
+        <div class="col-8 col-xl-6 mt-5">
+            <ul id="lista" class="list-group">
+            </ul>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const fechasString = localStorage.getItem('fechas');
+            console.log(fechasString)
+            if (!fechasString) {
+                $("ul").append($('<h3>').text("No hay reservas").addClass("bg-light py-3 rounded"))
+                return
+            }
+            const fechas = JSON.parse(fechasString);
 
+            const lista = $('#lista');
+
+            fechas.forEach(function (fechaString, index) {
+                const fecha = new Date(fechaString)
+                const li = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center');
+
+                const spanReserva = $('<span>').text(`Reserva ${index + 1}`);
+                li.append(spanReserva);
+
+                const spanFecha = $('<span>').addClass('badge bg-primary rounded-pill').text(`Fecha: ${fecha.toLocaleDateString("es-CL").slice(0, 10)}, Hora: ${fecha.toLocaleTimeString("es-CL")}`);
+                li.append(spanFecha);
+
+                lista.append(li);
+            });
+        });
+    </script>
 </body>
 
 </html>

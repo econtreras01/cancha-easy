@@ -253,26 +253,11 @@ th {
   .enlace {
     padding-left: 20px;
   }
-
-  nav ul li a {
-    font-size: 16px;
-  }
 }
 
 @media (max-width: 858px) {
   .checkbtn {
     display: block;
-  }
-
-  ul {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: #2c3e50;
-    top: 80px;
-    left: -100%;
-    text-align: center;
-    transition: all .5s;
   }
 
   li a:hover,
@@ -291,7 +276,8 @@ th {
 
 .container_calendar {
   max-height: 600px;
-  margin: 5% auto;
+  margin-left:auto;
+  margin-right:auto;
   width: 90%;
   max-width: 800px;
   background: white;
