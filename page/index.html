@@ -55,12 +55,11 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <script>
-    // Guardar el correo electrónico en localStorage cuando se envía el formulario
     document.getElementById('loginForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // Evitar que el formulario se envíe
-      var email = document.getElementById('email').value; // Obtener el valor del correo electrónico
-      localStorage.setItem('correoElectronico', email); // Guardar el correo electrónico en localStorage
-      window.location.href = 'perfil.html'; // Redirigir a la página de perfil
+      event.preventDefault();
+      var email = document.getElementById('email').value;
+      localStorage.setItem('correoElectronico', email); 
+      window.location.href = 'deportes.html'; 
     });
   </script>
 </body>
