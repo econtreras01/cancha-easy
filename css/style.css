@@ -450,11 +450,7 @@ th {
 }
  
 .inicioEasy {
-  
   width: 30%;
-  transform: translate(40px, -150px);
-
-
 }
 
 #hero {
@@ -466,7 +462,7 @@ th {
     rgba(0,0,0,0.5),
     rgba(0,0,0,0.5)
   ),
-  url("https://complejoseldyes.cl/wp-content/uploads/El-Dyes-Mall-Plaza-Norte-Complejos-El-Dyes-Galeria-13.jpg");
+  url("");
   background-size: cover;
   height: 100%;
   margin: auto;
@@ -479,20 +475,6 @@ th {
   padding: auto;
   text-align: center;
 
-}
-
-.btnInicio{
-  background-color: white;
-  border-radius: 30px;
-  padding: 5px 15px;
-  text-decoration: none;
-  color: black;
-  font-size: 15px;
-  align-items: center;
-  transform: translate(-340px,100px);
-  display: flex;
-  text-align: center;
-  
 }
 
 .btnInicio:hover{
