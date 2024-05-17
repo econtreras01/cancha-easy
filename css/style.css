@@ -269,7 +269,7 @@ th {
 }
 
 .nave {
-  background: #3aa4ad;
+  background: #ffffff;
   height: 80px;
   width: 100%;
 }
@@ -295,11 +295,12 @@ th {
 }
 
 .nave ul li a {
-  color: #fff;
+  color: #000000;
   font-size: 18px;
   padding: 7px 13px;
   border-radius: 3px;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .checkbtn {
@@ -538,63 +539,68 @@ th {
 
 /* css del inicio  */
 
-.bodyInicio{
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  height: 100vh;
-  
+
+.containerIni{
+  max-width: 1400px;
+  margin: auto;
 }
- 
-.inicioEasy {
-  
-  width: 30%;
-  transform: translate(40px, -150px);
-
-
+.botonInicio {
+  background-color: #ffffff;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-#hero {
+.botonInicio:hover{
+  background-color: #138f0c;
+  color: white;
+}
+
+#hero{
+  color:white;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image:linear-gradient(
+  text-align: center;
+  flex-direction: column;
+  background-image: url("/img/pateandoPelota-inicio.jpeg");
+  background-repeat : no-repeat;
+  background-size: 100%;
+  height: 100%;
+  width: 100%;
+
+}
+
+/* css index */
+
+.nave ul li :hover{
+  background-color: #2dd824;
+  color: white;
+  border-radius: 10px;
+}
+
+.btn-n{
+  background-color: #0d6efd;
+  border: none;
+  border-radius: 10px;
+  height: 35px;
+  width: 100px;
+}
+.btn-n:hover{
+  background-color: #2dd824;
+  color: white;
+}
+
+#hero1 {
+  background-image: linear-gradient(
     0deg,
     rgba(0,0,0,0.5),
     rgba(0,0,0,0.5)
-  ),
-  url("https://complejoseldyes.cl/wp-content/uploads/El-Dyes-Mall-Plaza-Norte-Complejos-El-Dyes-Galeria-13.jpg");
-  background-size: cover;
+  )
+  ,url("/img/pateandoPelota-inicio.jpeg");
+  background-repeat : no-repeat;
+  background-size: 100%;
   height: 100%;
-  margin: auto;
-  color: #ffffff
+  width: 100%;
 }
-
-.tituloInicio{
-
-  font-size: 16px;
-  padding: auto;
-  text-align: center;
-
-}
-
-.btnInicio{
-  background-color: white;
-  border-radius: 30px;
-  padding: 5px 15px;
-  text-decoration: none;
-  color: black;
-  font-size: 15px;
-  align-items: center;
-  transform: translate(-340px,100px);
-  display: flex;
-  text-align: center;
-  
-}
-
-.btnInicio:hover{
-  color: rgb(251, 251, 251);
-  background-color: #31f36b;
-
-}
-
