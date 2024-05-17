@@ -1,14 +1,49 @@
-html {
-  height: 100%;
-}
-body {
-  min-height: 100%;
-}
 body {
   margin: 0;
   padding: 0;
   background: linear-gradient(150deg, #355020, #94E058, #1a3306);
   background-attachment: fixed;
+  height: 100vh;
+  background-attachment: fixed;
+}
+
+nav {
+  max-height: 100px;
+}
+
+.eleccion {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background: white;
+  border-radius: 10px;
+}
+
+.eleccion h2 {
+  text-align: center;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid silver;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px;
+}
+
+.eleccion button {
+  border: none;
+  outline: none;
+  height: 90px;
+  width: 130px;
+  background: white;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .recuadro {
@@ -225,6 +260,20 @@ th {
 
 /* Css para responsive encabezado */
 
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.nave {
+  background: #ffffff;
+  height: 80px;
+  width: 100%;
+}
+
 .enlace {
   position: absolute;
   padding: 20px 50px;
@@ -232,6 +281,26 @@ th {
 
 .logo {
   height: 40px;
+}
+
+.nave ul {
+  float: right;
+  margin-right: 20px;
+}
+
+.nave ul li {
+  display: inline-block;
+  line-height: 80px;
+  margin: 0 5px;
+}
+
+.nave ul li a {
+  color: #000000;
+  font-size: 18px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 .checkbtn {
@@ -253,11 +322,37 @@ th {
   .enlace {
     padding-left: 20px;
   }
+
+  nav ul li a {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 858px) {
   .checkbtn {
     display: block;
+  }
+
+  ul {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #2c3e50;
+    top: 80px;
+    left: -100%;
+    text-align: center;
+    transition: all .5s;
+  }
+
+
+  .nave ul li {
+    display: block;
+    margin: 50px 0;
+    line-height: 30px;
+  }
+
+  .nave ul li a {
+    font-size: 20px;
   }
 
   li a:hover,
@@ -274,10 +369,13 @@ th {
 
 /* Css para calendario */
 
+
+
+
+
 .container_calendar {
   max-height: 600px;
-  margin-left:auto;
-  margin-right:auto;
+  margin: 5% auto;
   width: 90%;
   max-width: 800px;
   background: white;
@@ -441,6 +539,7 @@ th {
 
 /* css del inicio  */
 
+<<<<<<< HEAD
 .bodyInicio{
   justify-content: center;
   align-items: center;
@@ -465,9 +564,14 @@ th {
   url("");
   background-size: cover;
   height: 100%;
+=======
+
+.containerIni{
+  max-width: 1400px;
+>>>>>>> 463d5134c3448eaf96906f8b58e6b6025cc97618
   margin: auto;
-  color: #ffffff
 }
+<<<<<<< HEAD
 
 .tituloInicio{
 
@@ -480,6 +584,52 @@ th {
 .btnInicio:hover{
   color: rgb(251, 251, 251);
   background-color: #31f36b;
+=======
+.botonInicio {
+  background-color: #ffffff;
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+}
 
+.botonInicio:hover{
+  background-color: #138f0c;
+  color: white;
+}
+
+#hero{
+  color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  background-image: url("/img/pateandoPelota-inicio.jpeg");
+  background-repeat : no-repeat;
+  background-size: 100%
+  height: 100%;
+>>>>>>> 463d5134c3448eaf96906f8b58e6b6025cc97618
+
+}
+
+/* css index */
+
+.nave ul li :hover{
+  background-color: #2dd824;
+  color: white;
+  border-radius: 10px;
+}
+
+.btn-n{
+  background-color: #0d6efd;
+  border: none;
+  border-radius: 10px;
+  height: 35px;
+  width: 100px;
+}
+.btn-n:hover{
+  background-color: #2dd824;
+  color: white;
 }
 

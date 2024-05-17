@@ -13,91 +13,62 @@
 </head> <!--Links de bootstrap y del CSS-->
 
 <body> <!--Encabezado y logo-->
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="inicio.html">
-                <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
-            </a>
-        </div>
-    </nav>
-    <div class="row text-center justify-content-center m-0 h-100 align-items-center">
-        <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light mt-5">
-            <header>
-                <h2 class="mb-3">Iniciar sesión</h2>
-                <div class="opacity-75 h6 text-start">
-                    <p class="mb-2">¡Bienvenido a Cancha-easy!</p>
-                    <p class="m-0">Por favor, ingresa tus datos</p>
-                </div>
-            </header>
-            <main>
-                <form class="text-start" action="deportes.html">
-                    <div class="my-2">
-                        <label for="email" class="my-2">Correo electrónico</label>
-                        <input type="email" id="email" class="form-control p-2 rounded-5 m-0 shadow-none border"
-                            required>
+    <nav class="nave">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <a href="inicio.html" class="enlace">
+            <img src="../img/icon.svg" class="logo" alt="">
+        </a>
+        <ul>
+            <li><a href="index.html">Inicio Sesión</a></li>
+            <li><a href="registro.html">Registrate</a></li>
+            <li><a href="recuperar_password.html">Recuperar contraseña</a></li>
+        </ul>
+    </nav><br>
+    <div id="hero1">
+        <div class="row text-center justify-content-center m-0 h-100 align-items-center">
+            <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light mt-5">
+                <header>
+                    <h2 class="mb-3">Iniciar sesión</h2>
+                    <div class="opacity-75 h6 text-start">
+                        <p class="mb-2">¡Bienvenido a <span style="color: black;">Cancha</span><span style="color: green;">Easy!</span></p>
+                        <p class="m-0">Por favor, ingresa tus datos</p>
                     </div>
-                    <div>
-                        <label for="email" class="my-2">Contraseña</label>
-                        <input type="password" id="password" class="form-control p-2 rounded-5 m-0 shadow-none border"
-                            required>
-                    </div>
-                    <div class="recordar d-flex justify-content-between my-3">
+                </header>
+                <main>
+                    <form class="text-start" action="deportes.html">
                         <div class="my-2">
-                            <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
+                            <label for="email" class="my-2">Correo electrónico</label>
+                            
+                            <input type="email" id="email" class="form-control p-2 rounded-5 m-0 shadow-none border"
+                                required>
                         </div>
-                        <input id="ingresarBtn" class="btn btn-primary px-4 rounded-5" type="submit" value="Ingresar"
-                            disabled>
+                        <div>
+                            <label for="email" class="my-2">Contraseña</label>
+                            <input type="password" class="form-control p-2 rounded-5 m-0 shadow-none border" required>
+                        </div>
+                        <div class="recordar d-flex justify-content-between my-3">
+                            <div class="my-2">
+                                <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
+                            </div>
+                            <input class="btn-n" type="submit" value="Ingresar">
+                        </div>
+                    </form>
+                    <div class="my-3">
+                        <span>¿No tienes cuenta?</span><a href="registro.html"> Registrate aquí</a><br>
+                        <a href="recuperar_password.html">Olvidé mi contraseña</a>
                     </div>
-                </form>
-                <div class="my-3">
-                    <span>¿No tienes cuenta?</span><a href="registro.html"> Registrate aquí</a><br>
-                    <a href="recuperar_password.html">Olvidé mi contraseña</a>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>        // Declaración de variables para verificar errores en el formulario
-        let errorCorreo = true;
-        let errorPassword = true;
-        let regexMail =
-            /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-
-        const ingresarBtnHTML = $("#ingresarBtn");
-        const mailHTML = $("#email");
-        const passHTML = $("#password")
-        mailHTML.keyup(function () {
-            if (regexMail.test(mailHTML.val())) {
-                mailHTML.removeClass("is-invalid");
-                errorCorreo = false;
-            } else {
-                mailHTML.addClass("is-invalid");
-                errorCorreo = true;
-            }
-        });
-
-        passHTML.keyup(function () {
-            if (passHTML.val().length < 5 || !passHTML) {
-                passHTML.addClass("is-invalid");
-                errorPassword = true
-            } else {
-                passHTML.removeClass("is-invalid");
-                errorPassword = false
-            }
-        });
-
-        $("form").keyup(function () {
-            if (!errorCorreo && !errorPassword) {
-                ingresarBtnHTML.attr("disabled", false)
-            } else {
-                ingresarBtnHTML.attr("disabled", true)
-            }
-        })
-
-    </script>
 </body>
 
 </html>
