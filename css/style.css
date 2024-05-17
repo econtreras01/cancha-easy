@@ -539,7 +539,6 @@ th {
 
 /* css del inicio  */
 
-<<<<<<< HEAD
 .bodyInicio{
   justify-content: center;
   align-items: center;
@@ -564,14 +563,8 @@ th {
   url("");
   background-size: cover;
   height: 100%;
-=======
-
-.containerIni{
-  max-width: 1400px;
->>>>>>> 463d5134c3448eaf96906f8b58e6b6025cc97618
   margin: auto;
 }
-<<<<<<< HEAD
 
 .tituloInicio{
 
@@ -584,32 +577,6 @@ th {
 .btnInicio:hover{
   color: rgb(251, 251, 251);
   background-color: #31f36b;
-=======
-.botonInicio {
-  background-color: #ffffff;
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.botonInicio:hover{
-  background-color: #138f0c;
-  color: white;
-}
-
-#hero{
-  color:white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  background-image: url("/img/pateandoPelota-inicio.jpeg");
-  background-repeat : no-repeat;
-  background-size: 100%
-  height: 100%;
->>>>>>> 463d5134c3448eaf96906f8b58e6b6025cc97618
 
 }
 
