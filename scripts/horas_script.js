@@ -2,14 +2,12 @@ $(document).ready(function () {
     let selectedHours = [];
     let selectedDay = null;
 
-    // Agregar horas disponibles
     for (let i = 10; i <= 19; i++) {
         $(".hours_container").append(`<div class="hour_item" id="hour_${i}" data-hour="${i}">${i}:00</div>`);
     }
 
-    // Controlador de eventos para el botón "Guardar Reserva"
+
     $("#guardarReserva").click(function () {
-        // Guardar la reserva
         const fechas = JSON.parse(localStorage.getItem("fechas")) || []
         console.log(selectedDay)
         localStorage.setItem("reserva",selectedDay.toString())
@@ -18,19 +16,17 @@ $(document).ready(function () {
         window.location.href = "reservalista.html"
     });
 
-    // Establecer el evento de clic para cada día del calendario
     $(".calendar-day").click(function () {
-        if ($(this).hasClass("disabled")) return; // Salir si el día está deshabilitado
+        if ($(this).hasClass("disabled")) return;
         $(".calendar-day").removeClass("selected");
         $(this).addClass("selected");
         selectedDay = new Date(year, month, parseInt($(this).text()));
-        clearSelectedHours(); // Limpiar las horas seleccionadas al cambiar de día
-        updateReservaMensaje(); // Actualizar el mensaje de reserva después de seleccionar un nuevo día
+        clearSelectedHours();
+        updateReservaMensaje(); 
     });
 
-    // Manejar la selección de horas
     $(".hour_item").click(function () {
-        if ($(this).hasClass("disabled") || !selectedDay || isPastHour($(this).data("hour"))) return; // No permitir selección de hora si no se ha seleccionado un día o si es una hora pasada
+        if ($(this).hasClass("disabled") || !selectedDay || isPastHour($(this).data("hour"))) return;
         $(this).toggleClass("selected");
         let hour = $(this).data("hour");
         let index = selectedHours.indexOf(hour);
@@ -43,7 +39,6 @@ $(document).ready(function () {
         updateReservaMensaje();
     });
 
-    // Función para verificar si una hora es pasada
     function isPastHour(hour) {
         let now = new Date();
         let currentHour = now.getHours();
@@ -54,7 +49,7 @@ $(document).ready(function () {
         return false;
     }
 
-    // Función para actualizar el mensaje de reserva
+
     function updateReservaMensaje() {
         let mensaje = "RESERVA ";
         if (selectedDay) {
@@ -82,11 +77,10 @@ $(document).ready(function () {
 
 
 
-    // Función para limpiar las horas seleccionadas
     function clearSelectedHours() {
         $(".hour_item").removeClass("selected");
         selectedHours = [];
-        updateReservaMensaje(); // Actualizar el mensaje de reserva después de limpiar las horas
+        updateReservaMensaje(); 
     }
 
 });

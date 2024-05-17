@@ -38,13 +38,12 @@
       <main>
         <form class="text-start" action="">
           <div class="my-2">
-            <label for="nombre" class="my-2">Nombre</label>
-            <input type="text" value="Luis Aránguiz" id="nombre"
+            <label for="nombre" class="my-2">Nombre de usuario</label>
+            <input type="text" value="" id="nombreUsuario"
               class="form-control p-2 rounded-5 m-0 shadow-none border">
           </div>
           <div class="my-2">
             <label for="email" class="my-2">Correo electrónico</label>
-            <!-- Mostrar el correo electrónico guardado en localStorage -->
             <input type="email" value="" id="email"
               class="form-control p-2 rounded-5 m-0 shadow-none border">
           </div>
@@ -56,8 +55,10 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <script>
-    // Recuperar el correo electrónico guardado en localStorage y mostrarlo en el campo de correo electrónico
     var correoElectronico = localStorage.getItem('correoElectronico');
+    var nombreUsuario = correoElectronico.split('@')[0];
+
+    document.getElementById('nombreUsuario').value = nombreUsuario;
     document.getElementById('email').value = correoElectronico;
   </script>
 </body>
