@@ -8,9 +8,9 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head> <!--Links de bootstrap y del CSS-->
+</head> 
 
-<body> <!--Encabezado y logo-->
+<body>
     <nav class="navbar navbar-expand-md bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="inicio.html">
@@ -42,28 +42,55 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            const fechasString = localStorage.getItem('fechas');
-            console.log(fechasString)
-            if (!fechasString) {
-                $("ul").append($('<h3>').text("No hay reservas").addClass("bg-light py-3 rounded"))
-                return
-            }
-            const fechas = JSON.parse(fechasString);
-
             const lista = $('#lista');
+            cargarReservas();
 
-            fechas.forEach(function (fechaString, index) {
-                const fecha = new Date(fechaString)
-                const li = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center');
+            function cargarReservas() {
+                lista.empty(); 
+                const fechasString = localStorage.getItem('fechas');
+                if (!fechasString) {
+                    lista.append($('<h3>').text("No hay reservas").addClass("bg-light py-3 rounded"));
+                    return;
+                }
+                const fechas = JSON.parse(fechasString);
+                fechas.forEach(function (fechaString, index) {
+                    const fecha = new Date(fechaString);
+                    const li = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center');
+                    const spanReserva = $('<span>').text(`Reserva ${index + 1}`);
+                    li.append(spanReserva);
+                    const spanFecha = $('<span>').addClass('badge bg-primary rounded-pill').text(`Fecha: ${fecha.toLocaleDateString("es-CL").slice(0, 10)}, Hora: ${fecha.toLocaleTimeString("es-CL")}`);
+                    li.append(spanFecha);
+                    const btnEliminar = $('<button>').addClass('btn btn-danger btn-sm ms-2').text('Eliminar');
+                    btnEliminar.click(function() {
+                        eliminarReserva(index);
+                    });
+                    li.append(btnEliminar);
+                    const btnModificar = $('<button>').addClass('btn btn-primary btn-sm ms-2').text('Modificar');
+                    btnModificar.click(function() {
+                        modificarReserva(index);
+                    });
+                    li.append(btnModificar);
+                    lista.append(li);
+                });
+            }
 
-                const spanReserva = $('<span>').text(`Reserva ${index + 1}`);
-                li.append(spanReserva);
+            function eliminarReserva(index) {
+                const fechasString = localStorage.getItem('fechas');
+                if (!fechasString) return;
+                const fechas = JSON.parse(fechasString);
+                fechas.splice(index, 1); 
+                localStorage.setItem('fechas', JSON.stringify(fechas));
+                cargarReservas(); 
+            }
 
-                const spanFecha = $('<span>').addClass('badge bg-primary rounded-pill').text(`Fecha: ${fecha.toLocaleDateString("es-CL").slice(0, 10)}, Hora: ${fecha.toLocaleTimeString("es-CL")}`);
-                li.append(spanFecha);
-
-                lista.append(li);
-            });
+            function modificarReserva(index) {
+                const fechasString = localStorage.getItem('fechas');
+                if (!fechasString) return;
+                const fechas = JSON.parse(fechasString);
+                fechas.splice(index, 1); 
+                localStorage.setItem('fechas', JSON.stringify(fechas)); 
+                window.location.href = 'reserva.html'; 
+            }
         });
     </script>
 </body>
