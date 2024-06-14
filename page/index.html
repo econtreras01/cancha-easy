@@ -1,74 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cancha-easy!</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/estilo.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
-</head> <!--Links de bootstrap y del CSS-->
 
-<body> <!--Encabezado y logo-->
-    <nav class="nave">
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-            <i class="fas fa-bars"></i>
-        </label>
-        <a href="inicio.html" class="enlace">
-            <img src="../img/icon.svg" class="logo" alt="">
-        </a>
-        <ul>
-            <li><a href="index.html">Inicio Sesión</a></li>
-            <li><a href="registro.html">Registrate</a></li>
-            <li><a href="recuperar_password.html">Recuperar contraseña</a></li>
-        </ul>
-    </nav><br>
-    <div id="hero1">
-        <div class="row text-center justify-content-center m-0 h-100 align-items-center">
-            <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light mt-5">
-                <header>
-                    <h2 class="mb-3">Iniciar sesión</h2>
-                    <div class="opacity-75 h6 text-start">
-                        <p class="mb-2">¡Bienvenido a <span style="color: black;">Cancha</span><span style="color: green;">Easy!</span></p>
-                        <p class="m-0">Por favor, ingresa tus datos</p>
-                    </div>
-                </header>
-                <main>
-                    <form class="text-start" action="deportes.html">
-                        <div class="my-2">
-                            <label for="email" class="my-2">Correo electrónico</label>
-                            
-                            <input type="email" id="email" class="form-control p-2 rounded-5 m-0 shadow-none border"
-                                required>
-                        </div>
-                        <div>
-                            <label for="email" class="my-2">Contraseña</label>
-                            <input type="password" class="form-control p-2 rounded-5 m-0 shadow-none border" required>
-                        </div>
-                        <div class="recordar d-flex justify-content-between my-3">
-                            <div class="my-2">
-                                <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
-                            </div>
-                            <input class="btn-n" type="submit" value="Ingresar">
-                        </div>
-                    </form>
-                    <div class="my-3">
-                        <span>¿No tienes cuenta?</span><a href="registro.html"> Registrate aquí</a><br>
-                        <a href="recuperar_password.html">Olvidé mi contraseña</a>
-                    </div>
-                </main>
+<body>
+    <main>
+        <div class="contenedor__todo">
+            <div class="caja__trasera">
+                <div class="caja__trasera-login">
+                    <h3>¿Ya tienes una cuenta?</h3>
+                    <p>inicia sesion para empezar la reserva con
+                        <span style="color: black;">Cancha</span>
+                        <span style="color: green;">Easy</span> 
+                    </p>
+                    <button id="btn__iniciar-sesion">inicia sesion aqui</button>
+                </div>
+                <div class="caja__trasera-register">
+                    <h3>¿Aún no tienes una cuenta?</h3>
+                    <p>Registrate para empezar la reserva de tus canchas</p>
+                    <button id="btn__registrarse">Registrarse</button>
+                </div>
             </div>
+            <!--Formulario de login y register-->
+            <div class="contenedor__login-register">
+            <!--Login-->
+                <form action="deportes.html" class="formulario__login">
+                    <h2>Iniciar Sesion</h2>
+                    <input type="email" placeholder="Correo Electronico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button> Entrar </button>
+                    <a href="recuperar_password.html"> Olvidé mi contraseña</a>
+                </form>
+                <!--Register-->
+                <form action="deportes.html" class="formulario__register">
+                    <h2>Registrarse</h2>
+                    <input type="text" placeholder="Nombre" required>
+                    <input type="text" placeholder="Apellido" required>
+                    <input type="email" placeholder="Correo Electronico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button>Registrarse</button> 
+                </form>
+            </div>
+
+
         </div>
-    </div>
 
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-        crossorigin="anonymous"></script>
+    </main>
+
+    <script src="/scripts/script.js"></script>
+
 </body>
-
 </html>
