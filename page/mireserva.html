@@ -58,7 +58,7 @@
 
         function editarReserva(idReserva, fechaReserva) {
             const hoy = new Date();
-            const fechaReservaDate = new Date(fechaReserva);
+            const fechaReservaDate = new Date(fechaReserva + 'T00:00:00Z'); // Agregar la hora para asegurar la interpretación correcta
 
             if (fechaReservaDate >= hoy) {
                 window.location.href = `editar_reserva.html?id=${idReserva}`;
@@ -83,8 +83,11 @@
         }
 
         function formatearFecha(fechaString) {
-            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(fechaString).toLocaleDateString('es-ES', opciones);
+            const fecha = new Date(fechaString);
+            const dia = fecha.getUTCDate();
+            const mes = fecha.toLocaleString('es-ES', { month: 'long' });
+            const anio = fecha.getFullYear();
+            return `${dia} de ${mes} de ${anio}`;
         }
 
         function mostrarReservas(reservas) {
@@ -94,14 +97,13 @@
             const hoy = new Date();
 
             reservas.forEach(reserva => {
-                const fechaReserva = new Date(reserva.fecha);
+                const fechaReserva = new Date(reserva.fecha + 'T00:00:00Z'); // Ajuste para asegurar la interpretación correcta
                 const horaInicio = reserva.hora_inicio.slice(0, 5);
                 const horaFin = reserva.hora_fin.slice(0, 5);
 
                 const $li = $(`
                     <li class="list-group-item">
                         <p>Código de reserva: ${reserva.id_reserva}</p>
-                        <p>Nombre del reservante: <span id="nombreReserva_${reserva.id_reserva}"></span></p>
                         <p>Fecha: ${formatearFecha(reserva.fecha)}</p>
                         <p>Hora de inicio: ${horaInicio}</p>
                         <p>Hora de término: ${horaFin}</p>
@@ -117,21 +119,6 @@
                 }
 
                 $lista.append($li);
-
-                obtenerNombreUsuario(reserva.usuario, `nombreReserva_${reserva.id_reserva}`);
-            });
-        }
-
-        function obtenerNombreUsuario(idUsuario, elementoId) {
-            $.ajax({
-                url: `http://127.0.0.1:8000/api/usuarios/${idUsuario}`,
-                method: 'GET',
-                success: function (usuario) {
-                    $(`#${elementoId}`).text(usuario.nombre + ' ' + usuario.apellido);
-                },
-                error: function (error) {
-                    console.error('Error al obtener el usuario:', error);
-                }
             });
         }
 

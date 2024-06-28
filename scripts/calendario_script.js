@@ -163,12 +163,10 @@ $(document).ready(function () {
             data: JSON.stringify(reservaData),
             success: function (response) {
                 console.log('Reserva creada:', response);
-                alert('Reserva creada exitosamente con ID: ' + response.id_reserva);
                 window.location.href = "reservalista.html?id=" + response.id_reserva;
             },
             error: function (error) {
                 console.error('Error al crear reserva:', error);
-                alert('Error al crear reserva.');
             }
         });
     });

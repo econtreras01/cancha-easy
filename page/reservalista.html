@@ -56,34 +56,28 @@
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
       ];
-      // Obtener el ID de la reserva desde la URL
       const urlParams = new URLSearchParams(window.location.search);
       const reservaId = urlParams.get('id');
 
-      // Hacer la solicitud GET para obtener los detalles de la reserva
       $.ajax({
         url: `http://127.0.0.1:8000/api/reservas/${reservaId}`,
         method: 'GET',
         success: function (response) {
-          // Rellenar los datos en la página
           $("#idReserva").text(response.id_reserva);
           $("#horaInicio").text(response.hora_inicio);
           $("#horaTermino").text(response.hora_fin);
 
-          // Formatear la fecha en "29 de Junio de 2024"
-          const fecha = new Date(response.fecha);
+          const fecha = new Date(response.fecha + 'T00:00:00'); // Asegura que la fecha se interprete correctamente
           const dia = fecha.getDate();
           const mes = nombresMeses[fecha.getMonth()];
           const anio = fecha.getFullYear();
           $("#fecha").text(`${dia} de ${mes} de ${anio}`);
 
-          // Obtener el nombre del usuario desde api/usuarios
           $.ajax({
             url: `http://127.0.0.1:8000/api/usuarios/${response.usuario}`,
             method: 'GET',
             success: function (usuarioResponse) {
               $("#nombreReserva").text(usuarioResponse.nombre + " " + usuarioResponse.apellido);
-              // Rellenar el nombre del reservante
             },
             error: function (error) {
               console.error('Error al obtener el nombre del reservante:', error);
@@ -94,8 +88,8 @@
           console.error('Error al obtener los detalles de la reserva:', error);
         }
       });
-
     });
+
   </script>
 </body>
 
