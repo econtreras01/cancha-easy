@@ -67,7 +67,8 @@
             </div>
             <div class="reserva_info">
                 <div id="reserva_mensaje" class="reserva_mensaje"></div> <!-- Mensaje de reserva -->
-                <button class="btn btn-primary px-4 rounded-5" id="guardarReserva" disabled>Guardar Reserva</button>
+                <input type="submit" class="btn btn-primary px-4 rounded-5" id="guardarReserva" value="Guardar Reserva"
+                    disabled>
             </div><br>
         </div>
     </div>
@@ -116,27 +117,29 @@
     <script src="../scripts/horas_script.js"></script>
     <script src="../scripts/deporte_script.js"></script>
     <script>
-        $.ajax({
-            url: "http://dataservice.accuweather.com/forecasts/v1/daily/5day/60449?apikey=l9JBiUUs1IOaUjF9u40u0f3H5lqZi5Bp&language=es&metric=true",
-            type: "GET",
-            success: function (response) {
-                $("#climaContainer").children().each(function (index, div) {
-                    const climaDia = response.DailyForecasts[index]
-                    const nombreDia = new Date(climaDia.Date).toLocaleDateString("es-ES", { weekday: "long" })
-                    let codigoIcono = climaDia.Day.Icon
-                    if (codigoIcono < 10) {
-                        codigoIcono = "0" + codigoIcono
-                    }
-                    div.firstElementChild.textContent = nombreDia[0].toUpperCase() + nombreDia.slice(1)
-                    div.children[1].setAttribute("src", "https://developer.accuweather.com/sites/default/files/" + codigoIcono + "-s.png")
-                    div.children[2].firstChild.textContent = Math.round(climaDia.Temperature.Minimum.Value) + "°C"
-                    div.children[2].lastChild.textContent = Math.round(climaDia.Temperature.Maximum.Value) + "°C"
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://dataservice.accuweather.com/forecasts/v1/daily/5day/60449?apikey=l9JBiUUs1IOaUjF9u40u0f3H5lqZi5Bp&language=es&metric=true",
+                type: "GET",
+                success: function (response) {
+                    $("#climaContainer").children().each(function (index, div) {
+                        const climaDia = response.DailyForecasts[index]
+                        const nombreDia = new Date(climaDia.Date).toLocaleDateString("es-ES", { weekday: "long" })
+                        let codigoIcono = climaDia.Day.Icon
+                        if (codigoIcono < 10) {
+                            codigoIcono = "0" + codigoIcono
+                        }
+                        div.firstElementChild.textContent = nombreDia[0].toUpperCase() + nombreDia.slice(1)
+                        div.children[1].setAttribute("src", "https://developer.accuweather.com/sites/default/files/" + codigoIcono + "-s.png")
+                        div.children[2].firstChild.textContent = Math.round(climaDia.Temperature.Minimum.Value) + "°C"
+                        div.children[2].lastChild.textContent = Math.round(climaDia.Temperature.Maximum.Value) + "°C"
 
-                })
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-            }
+                    })
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
         });
     </script>
 </body>

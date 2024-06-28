@@ -8,9 +8,9 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head> <!--Links de bootstrap y del CSS-->
+</head>
 
-<body> <!--Encabezado y logo-->
+<body>
     <nav class="navbar navbar-expand-md bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="inicio.html">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </nav>
-    <div class="row text-center justify-content-center m-0 h-100 align-items-center">
+    <div class="row text-center justify-content-center m-0 mt-5 align-items-center">
         <div class="col-8 col-xl-6 mt-5">
             <ul id="lista" class="list-group">
             </ul>
@@ -41,29 +41,102 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-            const fechasString = localStorage.getItem('fechas');
-            console.log(fechasString)
-            if (!fechasString) {
-                $("ul").append($('<h3>').text("No hay reservas").addClass("bg-light py-3 rounded"))
-                return
+        function eliminarReserva(idReserva) {
+            if (confirm("¿Estás seguro de que deseas eliminar esta reserva?")) {
+                $.ajax({
+                    url: `http://127.0.0.1:8000/api/reservas/${idReserva}/`,
+                    method: 'DELETE',
+                    success: function () {
+                        cargarReservas();
+                    },
+                    error: function (error) {
+                        console.error('Error al eliminar la reserva:', error);
+                    }
+                });
             }
-            const fechas = JSON.parse(fechasString);
+        }
 
-            const lista = $('#lista');
+        function editarReserva(idReserva, fechaReserva) {
+            const hoy = new Date();
+            const fechaReservaDate = new Date(fechaReserva);
 
-            fechas.forEach(function (fechaString, index) {
-                const fecha = new Date(fechaString)
-                const li = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center');
+            if (fechaReservaDate >= hoy) {
+                window.location.href = `editar_reserva.html?id=${idReserva}`;
+            } else {
+                alert("No se puede editar una reserva pasada.");
+            }
+        }
 
-                const spanReserva = $('<span>').text(`Reserva ${index + 1}`);
-                li.append(spanReserva);
+        function cargarReservas() {
+            const idUsuario = '12345678-9';
 
-                const spanFecha = $('<span>').addClass('badge bg-primary rounded-pill').text(`Fecha: ${fecha.toLocaleDateString("es-CL").slice(0, 10)}, Hora: ${fecha.toLocaleTimeString("es-CL")}`);
-                li.append(spanFecha);
-
-                lista.append(li);
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/reservas/?usuario=${idUsuario}`,
+                method: 'GET',
+                success: function (reservas) {
+                    mostrarReservas(reservas);
+                },
+                error: function (error) {
+                    console.error('Error al cargar las reservas:', error);
+                }
             });
+        }
+
+        function formatearFecha(fechaString) {
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(fechaString).toLocaleDateString('es-ES', opciones);
+        }
+
+        function mostrarReservas(reservas) {
+            const $lista = $('#lista');
+            $lista.empty();
+
+            const hoy = new Date();
+
+            reservas.forEach(reserva => {
+                const fechaReserva = new Date(reserva.fecha);
+                const horaInicio = reserva.hora_inicio.slice(0, 5);
+                const horaFin = reserva.hora_fin.slice(0, 5);
+
+                const $li = $(`
+                    <li class="list-group-item">
+                        <p>Código de reserva: ${reserva.id_reserva}</p>
+                        <p>Nombre del reservante: <span id="nombreReserva_${reserva.id_reserva}"></span></p>
+                        <p>Fecha: ${formatearFecha(reserva.fecha)}</p>
+                        <p>Hora de inicio: ${horaInicio}</p>
+                        <p>Hora de término: ${horaFin}</p>
+                    </li>
+                `);
+
+                const $btnEliminar = $(`<button class="btn btn-danger btn-sm mt-2 me-2" onclick="eliminarReserva('${reserva.id_reserva}')">Eliminar</button>`);
+                $li.append($btnEliminar);
+
+                if (fechaReserva >= hoy) {
+                    const $btnEditar = $(`<button class="btn btn-primary btn-sm mt-2" onclick="editarReserva('${reserva.id_reserva}', '${reserva.fecha}')">Editar</button>`);
+                    $li.append($btnEditar);
+                }
+
+                $lista.append($li);
+
+                obtenerNombreUsuario(reserva.usuario, `nombreReserva_${reserva.id_reserva}`);
+            });
+        }
+
+        function obtenerNombreUsuario(idUsuario, elementoId) {
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/usuarios/${idUsuario}`,
+                method: 'GET',
+                success: function (usuario) {
+                    $(`#${elementoId}`).text(usuario.nombre + ' ' + usuario.apellido);
+                },
+                error: function (error) {
+                    console.error('Error al obtener el usuario:', error);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            cargarReservas();
         });
     </script>
 </body>

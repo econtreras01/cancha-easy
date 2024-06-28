@@ -32,13 +32,13 @@
       </div>
     </div>
   </nav>
-  <div class="row my-auto text-center justify-content-center m-0 mt-5 h-100 align-items-center">
+  <div class="row my-auto text-center justify-content-center m-0 mt-5 align-items-center">
     <div class="col-auto bg-light p-4 rounded-4 shadow">
       <div class="row text-center justify-content-center m-0 h-0 align-items-center">
         <div>
           <h2 class="mb-3">¡Cancha reservada exitosamente!</h2>
           <p>Código de reserva: <span id="idReserva"></span></p>
-          <p>Nombre del reservante:<span id="nombreReserva"></span></p>
+          <p>Nombre del reservante: <span id="nombreReserva"></span></p>
           <p>Fecha: <span id="fecha"></span></p>
           <p>Hora de inicio: <span id="horaInicio"></span></p>
           <p>Hora de término: <span id="horaTermino"></span></p>
@@ -51,18 +51,51 @@
     crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-    const nombresMeses = [
-      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-    ]
-    const fecha = new Date(localStorage.getItem("reserva"))
-    const dia = fecha.getUTCDate()
-    const mes = nombresMeses[fecha.getUTCMonth()]
-    const anio = fecha.getUTCFullYear();
-    $("#fecha").text(dia + " de " + mes + " del " + anio);
-    $("#horaInicio").text(fecha.toLocaleTimeString("es-CL").slice(0, 5));
-    $("#horaTermino").text(new Date(fecha.getTime() + 60 * 60 * 1000).toLocaleTimeString("es-CL").slice(0, 5));
+    $(document).ready(function () {
+      const nombresMeses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+      // Obtener el ID de la reserva desde la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const reservaId = urlParams.get('id');
 
+      // Hacer la solicitud GET para obtener los detalles de la reserva
+      $.ajax({
+        url: `http://127.0.0.1:8000/api/reservas/${reservaId}`,
+        method: 'GET',
+        success: function (response) {
+          // Rellenar los datos en la página
+          $("#idReserva").text(response.id_reserva);
+          $("#horaInicio").text(response.hora_inicio);
+          $("#horaTermino").text(response.hora_fin);
+
+          // Formatear la fecha en "29 de Junio de 2024"
+          const fecha = new Date(response.fecha);
+          const dia = fecha.getDate();
+          const mes = nombresMeses[fecha.getMonth()];
+          const anio = fecha.getFullYear();
+          $("#fecha").text(`${dia} de ${mes} de ${anio}`);
+
+          // Obtener el nombre del usuario desde api/usuarios
+          $.ajax({
+            url: `http://127.0.0.1:8000/api/usuarios/${response.usuario}`,
+            method: 'GET',
+            success: function (usuarioResponse) {
+              $("#nombreReserva").text(usuarioResponse.nombre + " " + usuarioResponse.apellido);
+              // Rellenar el nombre del reservante
+            },
+            error: function (error) {
+              console.error('Error al obtener el nombre del reservante:', error);
+            }
+          });
+        },
+        error: function (error) {
+          console.error('Error al obtener los detalles de la reserva:', error);
+        }
+      });
+
+    });
   </script>
 </body>
 
