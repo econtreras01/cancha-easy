@@ -37,8 +37,8 @@
       <div class="row text-center justify-content-center m-0 h-0 align-items-center">
         <div>
           <h2 class="mb-3">¡Cancha reservada exitosamente!</h2>
-          <p>Código de reserva: 485831G</p>
-          <p>Nombre del reservante: Luis Aránguiz</p>
+          <p>Código de reserva: <span id="idReserva"></span></p>
+          <p>Nombre del reservante:<span id="nombreReserva"></span></p>
           <p>Fecha: <span id="fecha"></span></p>
           <p>Hora de inicio: <span id="horaInicio"></span></p>
           <p>Hora de término: <span id="horaTermino"></span></p>
@@ -56,8 +56,6 @@
       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     ]
     const fecha = new Date(localStorage.getItem("reserva"))
-    console.log(fecha)
-    console.log(localStorage.getItem("fechas"))
     const dia = fecha.getUTCDate()
     const mes = nombresMeses[fecha.getUTCMonth()]
     const anio = fecha.getUTCFullYear();
