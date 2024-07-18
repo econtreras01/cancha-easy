@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancha-easy!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+  <!-- Encabezado y logo -->
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="inicio.html">
+        <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active mx-2" aria-current="page" href="deportes.html">Deportes</a>
+          <a class="nav-link mx-2" href="mireserva.html">Mis reservas</a>
+          <a class="nav-link mx-2" href="perfil.html">Mi perfil</a>
+          <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sección de ingreso de datos -->
+  <div class="row text-center justify-content-center m-0 align-items-center mt-5">
+    <div class="col-8 col-md-10 col-xl-8 col-xxl-8 p-4 px-xxl-5 rounded-4 shadow bg-light">
+      <h1>Carrito</h1>
+      <hr>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Cancha</th>
+            <th scope="col">Dia</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+        <tfoot>
+          <tr id="footer">
+            <th scope="row" colspan="5">Carrito vacío</th>
+          </tr>
+        </tfoot>
+      </table>
+      <a class="nav-link mx-2" href="reservalista.html"><input type="submit" class="btn btn-primary px-4 rounded-5" id="guardarReserva" value="Comprar Reserva"
+        disabled></a>
+      <div class="row" id="cards"></div>
+    </div>
+  </div>
+
+  <!-- Plantillas -->
+  <template id="template-footer">
+    <th scope="row" colspan="2">Total productos</th>
+    <td>10</td>
+    <td>
+      <button class="btn btn-danger btn-sm" id="vaciar-carrito">vaciar todo</button>
+    </td>
+    <td class="font-weight-bold">$ <span>5000</span></td>
+  </template>
+
+  <template id="template-carrito">
+    <tr>
+      <th scope="row">id</th>
+      <td>Café</td>
+      <td>1</td>
+      <td>
+        <button class="btn btn-info btn-sm">+</button>
+        <button class="btn btn-danger btn-sm">-</button>
+      </td>
+      <td>$ <span>500</span></td>
+    </tr>
+  </template>
+
+  <template id="template-card">
+    <div class="col-12 mb-2 col-md-4">
+      <div class="card">
+        <img src="" alt="" class="card-img-top">
+        <div class="card-body">
+          <h5>Titulo</h5>
+          <p>precio</p>
+          <!--<button class="btn btn-dark"></button>--><!--Boton de compra cancha-->
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="../scripts/carrito_app.js"></script>
+  <script>
+    $(document).ready(function () {
+      const nombresMeses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+      ];
+      // Obtener el ID de la reserva desde la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const reservaId = urlParams.get('id');
+
+      // Hacer la solicitud GET para obtener los detalles de la reserva
+      $.ajax({
+        url: `http://127.0.0.1:8000/api/reservas/${reservaId}`,
+        method: 'GET',
+        success: function (response) {
+          // Rellenar los datos en la página
+          $("#idReserva").text(response.id_reserva);
+          $("#horaInicio").text(response.hora_inicio);
+          $("#horaTermino").text(response.hora_fin);
+
+          // Formatear la fecha en "29 de Junio de 2024"
+          const fecha = new Date(response.fecha);
+          const dia = fecha.getDate();
+          const mes = nombresMeses[fecha.getMonth()];
+          const anio = fecha.getFullYear();
+          $("#fecha").text(`${dia} de ${mes} de ${anio}`);
+
+          // Obtener el nombre del usuario desde api/usuarios
+          $.ajax({
+            url: `http://127.0.0.1:8000/api/usuarios/${response.usuario}`,
+            method: 'GET',
+            success: function (usuarioResponse) {
+              $("#nombreReserva").text(usuarioResponse.nombre + " " + usuarioResponse.apellido);
+              // Rellenar el nombre del reservante
+            },
+            error: function (error) {
+              console.error('Error al obtener el nombre del reservante:', error);
+            }
+          });
+        },
+        error: function (error) {
+          console.error('Error al obtener los detalles de la reserva:', error);
+        }
+      });
+
+    });
+  </script>
+</body>
+
+</html>
