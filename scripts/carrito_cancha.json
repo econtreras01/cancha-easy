@@ -1,0 +1,22 @@
+[
+	{
+		"precio": 9000,
+		"id": 1,
+		"title": "Futbol",
+		"thumbnailUrl": "../img/futbol.jpg"
+	},
+
+	{
+		"precio": 8000,
+		"id": 2,
+		"title": "Tennis",
+		"thumbnailUrl": "../img/tennis.jpg"
+	},
+
+	{
+		"precio": 7000,
+		"id": 3,
+		"title": "Volley",
+		"thumbnailUrl": "../img/volley.jpg"
+	}
+]
