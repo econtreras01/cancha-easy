@@ -47,7 +47,7 @@
                             <div class="my-2">
                                 <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
                             </div>
-                            <button type="submit" class="btn btn-primary">Ingresar</button>
+                            <button type="submit" id="ingresarBtnHTML" class="btn btn-primary">Ingresar</button>
                         </div>
                     </form>
                     <div class="my-3">
@@ -95,6 +95,63 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            let errorNombre = true;
+            let errorApellido = true;
+            let errorCorreo = true;
+            let errorPassword = true;
+            let regexMail =
+                /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+
+            const ingresarBtnHTML = $("#ingresarBtn");
+            const mailHTML = $("#email");
+            const passHTML = $("#password")
+            mailHTML.keyup(function () {
+                if (regexMail.test(mailHTML.val())) {
+                    mailHTML.removeClass("is-invalid");
+                    errorCorreo = false;
+                } else {
+                    mailHTML.addClass("is-invalid");
+                    errorCorreo = true;
+                }
+            });
+
+            nombreHTML.keyup(function () {
+                if (nombreHTML.val().length === 0 && apellidoHTML.val().length) {
+                    nombreHTML.addClass("is-invalid");
+                    errorNombre = true
+                } else {
+                    nombreHTML.removeClass("is-invalid");
+                    errorNombre = false
+                }
+            })
+
+            apellidoHTML.keyup(function () {
+                if (apellidoHTML.val().length === 0 || !apellidoHTML) {
+                    apellidoHTML.addClass("is-invalid");
+                    errorApellido = true
+                } else {
+                    apellidoHTML.removeClass("is-invalid");
+                    errorApellido = false
+                }
+            })
+
+            passHTML.keyup(function () {
+                if (passHTML.val().length < 5 || !passHTML) {
+                    passHTML.addClass("is-invalid");
+                    errorPassword = true
+                } else {
+                    passHTML.removeClass("is-invalid");
+                    errorPassword = false
+                }
+            });
+
+            $("form").keyup(function () {
+                if (!errorCorreo && !errorNombre && !errorApellido && !errorPassword) {
+                    ingresarBtnHTML.attr("disabled", false)
+                } else {
+                    ingresarBtnHTML.attr("disabled", true)
+                }
+            })
             $('#loginForm').on('submit', function (event) {
                 event.preventDefault();
                 const email = $('#email').val();
