@@ -47,7 +47,7 @@
                             <div class="my-2">
                                 <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
                             </div>
-                            <button type="submit" id="ingresarBtnHTML" class="btn btn-primary">Ingresar</button>
+                            <button type="submit" id="ingresarBtn" class="btn btn-primary" disabled>Ingresar</button>
                         </div>
                     </form>
                     <div class="my-3">
@@ -115,26 +115,6 @@
                 }
             });
 
-            nombreHTML.keyup(function () {
-                if (nombreHTML.val().length === 0 && apellidoHTML.val().length) {
-                    nombreHTML.addClass("is-invalid");
-                    errorNombre = true
-                } else {
-                    nombreHTML.removeClass("is-invalid");
-                    errorNombre = false
-                }
-            })
-
-            apellidoHTML.keyup(function () {
-                if (apellidoHTML.val().length === 0 || !apellidoHTML) {
-                    apellidoHTML.addClass("is-invalid");
-                    errorApellido = true
-                } else {
-                    apellidoHTML.removeClass("is-invalid");
-                    errorApellido = false
-                }
-            })
-
             passHTML.keyup(function () {
                 if (passHTML.val().length < 5 || !passHTML) {
                     passHTML.addClass("is-invalid");
@@ -146,7 +126,7 @@
             });
 
             $("form").keyup(function () {
-                if (!errorCorreo && !errorNombre && !errorApellido && !errorPassword) {
+                if (!errorCorreo && !errorPassword) {
                     ingresarBtnHTML.attr("disabled", false)
                 } else {
                     ingresarBtnHTML.attr("disabled", true)
