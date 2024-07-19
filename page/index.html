@@ -123,27 +123,6 @@
                     }
                 });
             });
-
-            $('#recuperarPasswordForm').on('submit', function (event) {
-                event.preventDefault();
-                const email = $('#recuperarEmail').val();
-
-                // Aquí debes agregar la lógica para manejar la recuperación de contraseña
-                // como enviar una solicitud AJAX a tu API para el proceso de recuperación
-
-                $.ajax({
-                    url: 'http://127.0.0.1:8000/api/recuperar-password/',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ email: email }),
-                    success: function () {
-                        $('#recuperarError').text('Revisa tu correo para las instrucciones de recuperación.');
-                    },
-                    error: function () {
-                        $('#recuperarError').text('No se pudo enviar el correo de recuperación.');
-                    }
-                });
-            });
         });
     </script>
 </body>
