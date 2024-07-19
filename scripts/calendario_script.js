@@ -173,6 +173,47 @@ $(document).ready(function () {
         });
     });
 
+    $("#pagarReserva").click(function () {
+        if (!selectedDay || selectedHours.length === 0) return;
+        
+        let usuarioId = '12345678-9';
+        let canchaId = 1;
+        let año = selectedDay.getFullYear();
+        let mes = ('0' + (selectedDay.getMonth() + 1)).slice(-2);
+        let dia = ('0' + selectedDay.getDate()).slice(-2);
+        let fechaReserva = `${año}-${mes}-${dia}`;
+        
+        let horaInicio = selectedDay.toLocaleTimeString('es-CL', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        selectedDay.setHours(selectedDay.getHours() + 1);
+        let horaFin = selectedDay.toLocaleTimeString('es-CL', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        
+        let estado = 1;
+
+        let reservaData = {
+            usuario: usuarioId,
+            cancha: canchaId,
+            fecha: fechaReserva,
+            hora_inicio: horaInicio,
+            hora_fin: horaFin,
+            estado: estado
+        };
+
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/reservas/',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(reservaData),
+            success: function (response) {
+                console.log('Reserva creada:', response);
+                window.location.href = "carrito.html?id=" + response.id_reserva;
+            },
+            error: function (error) {
+                console.error('Error al crear reserva:', error);
+                alert('Error al crear reserva.');
+            }
+        });
+    });
+
     function isPastHour(hour) {
         let now = new Date();
         let currentHour = now.getHours();
@@ -201,6 +242,8 @@ $(document).ready(function () {
         $("#reserva_mensaje").text(mensaje);
 
         $("#guardarReserva").prop('disabled', !selectedDay || selectedHours.length === 0);
+        $("#pagarReserva").prop('disabled', !selectedDay || selectedHours.length === 0);
+
     }
 
     function clearSelectedHours() {

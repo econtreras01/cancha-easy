@@ -9,10 +9,10 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
-  <!-- Encabezado y logo -->
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="inicio.html">
@@ -27,78 +27,67 @@
           <a class="nav-link active mx-2" aria-current="page" href="deportes.html">Deportes</a>
           <a class="nav-link mx-2" href="mireserva.html">Mis reservas</a>
           <a class="nav-link mx-2" href="perfil.html">Mi perfil</a>
-          <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+          <a class="nav-link mx-2" id="cerrarSesion" href="index.html">Cerrar sesión</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Sección de ingreso de datos -->
   <div class="row text-center justify-content-center m-0 align-items-center mt-5">
     <div class="col-8 col-md-10 col-xl-8 col-xxl-8 p-4 px-xxl-5 rounded-4 shadow bg-light">
-      <h1>Carrito</h1>
+      <h3>Pagar reserva</h3>
       <hr>
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Cancha</th>
-            <th scope="col">Dia</th>
-            <th scope="col">Hora</th>
-            <th scope="col">Total</th>
+            <th scope="col">ID de la reserva</th>
+            <th scope="col">N° Cancha</th>
+            <th scope="col">Fecha y hora</th>
+            <th scope="col">Costo</th>
           </tr>
         </thead>
         <tbody id="items"></tbody>
         <tfoot>
           <tr id="footer">
-            <th scope="row" colspan="5">Carrito vacío</th>
+            <th scope="row" class="text-end" colspan="3">Total</th>
+            <td class="" id="total">-</td>
           </tr>
         </tfoot>
       </table>
-      <a class="nav-link mx-2" href="reservalista.html"><input type="submit" class="btn btn-primary px-4 rounded-5" id="guardarReserva" value="Comprar Reserva"
-        disabled></a>
-      <div class="row" id="cards"></div>
+      <div class="row mb-3" id="cards">
+        <div class="col-12 col-md-6 mb-3">
+          <div class="card">
+            <img height="200" style="object-fit: cover;" src="../img/balon.jpg" class="card-img-top"
+              alt="Arriendo de balón">
+            <div class="card-body">
+              <h3 class="card-title">Arriendo de balón</h3>
+              <p class="card-text">Costo: $4.000</p>
+              <button class="btn btn-primary" id="agregarBalon">Agregar</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <div class="card">
+            <img height="200" style="object-fit: cover;" src="../img/luz.webp" class="card-img-top"
+              alt="Luz artificial">
+            <div class="card-body">
+              <h3 class="card-title">Luz artificial</h3>
+              <p class="card-text">Costo: $2.000</p>
+              <button class="btn btn-primary" id="agregarLuz">Agregar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button id="pagarBtn" type="button" class="btn btn-success px-4 rounded-5">Pagar</button>
     </div>
   </div>
 
-  <!-- Plantillas -->
-  <template id="template-footer">
-    <th scope="row" colspan="2">Total productos</th>
-    <td>10</td>
-    <td>
-      <button class="btn btn-danger btn-sm" id="vaciar-carrito">vaciar todo</button>
-    </td>
-    <td class="font-weight-bold">$ <span>5000</span></td>
-  </template>
-
-  <template id="template-carrito">
-    <tr>
-      <th scope="row">id</th>
-      <td>Café</td>
-      <td>1</td>
-      <td>
-        <button class="btn btn-info btn-sm">+</button>
-        <button class="btn btn-danger btn-sm">-</button>
-      </td>
-      <td>$ <span>500</span></td>
-    </tr>
-  </template>
-
-  <template id="template-card">
-    <div class="col-12 mb-2 col-md-4">
-      <div class="card">
-        <img src="" alt="" class="card-img-top">
-        <div class="card-body">
-          <h5>Titulo</h5>
-          <p>precio</p>
-          <!--<button class="btn btn-dark"></button>--><!--Boton de compra cancha-->
-        </div>
-      </div>
-    </div>
-  </template>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="../scripts/auth.js"></script>
   <script src="../scripts/carrito_app.js"></script>
   <script>
     $(document).ready(function () {
@@ -106,37 +95,59 @@
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
       ];
-      // Obtener el ID de la reserva desde la URL
       const urlParams = new URLSearchParams(window.location.search);
       const reservaId = urlParams.get('id');
 
-      // Hacer la solicitud GET para obtener los detalles de la reserva
+      let costoTotal = 0;
+      let balonAgregado = false;
+      let luzAgregada = false;
+      let reservaData = null;
+
+      function formatearCosto(costo) {
+        return `$${costo.toLocaleString('es-CL')}`;
+      }
+
+      function actualizarTotal() {
+        $("#total").text(formatearCosto(costoTotal));
+      }
+
+      function formatearFecha(fecha, horaInicio, horaFin) {
+        const fechaObj = new Date(fecha);
+        const dia = String(fechaObj.getDate()).padStart(2, '0');
+        const mes = String(fechaObj.getMonth() + 1).padStart(2, '0');
+        const anio = String(fechaObj.getFullYear()).slice(-2);
+        const horaInicioFormateada = `${horaInicio.substring(0, 5)}`;
+        const horaFinFormateada = `${horaFin.substring(0, 5)}`;
+
+        return `${dia}/${mes}/${anio} ${horaInicioFormateada} - ${horaFinFormateada}`;
+      }
+
+
       $.ajax({
         url: `http://127.0.0.1:8000/api/reservas/${reservaId}`,
         method: 'GET',
         success: function (response) {
-          // Rellenar los datos en la página
-          $("#idReserva").text(response.id_reserva);
-          $("#horaInicio").text(response.hora_inicio);
-          $("#horaTermino").text(response.hora_fin);
+          $("#items").append(`
+                <tr>
+                    <td>${response.id_reserva}</td>
+                    <td>${response.cancha}</td>
+                    <td>${formatearFecha(response.fecha, response.hora_inicio, response.hora_fin)}</td>
+                    <td id="costoCancha"></td>
+                </tr>
+            `);
+          reservaData = response
 
-          // Formatear la fecha en "29 de Junio de 2024"
-          const fecha = new Date(response.fecha);
-          const dia = fecha.getDate();
-          const mes = nombresMeses[fecha.getMonth()];
-          const anio = fecha.getFullYear();
-          $("#fecha").text(`${dia} de ${mes} de ${anio}`);
-
-          // Obtener el nombre del usuario desde api/usuarios
           $.ajax({
-            url: `http://127.0.0.1:8000/api/usuarios/${response.usuario}`,
+            url: `http://127.0.0.1:8000/api/canchas/${response.cancha}`,
             method: 'GET',
-            success: function (usuarioResponse) {
-              $("#nombreReserva").text(usuarioResponse.nombre + " " + usuarioResponse.apellido);
-              // Rellenar el nombre del reservante
+            success: function (canchaResponse) {
+              const costoCancha = canchaResponse.precio_por_hora;
+              $("#costoCancha").text(formatearCosto(costoCancha));
+              costoTotal += costoCancha;
+              actualizarTotal();
             },
             error: function (error) {
-              console.error('Error al obtener el nombre del reservante:', error);
+              console.error('Error al obtener el costo de la cancha:', error);
             }
           });
         },
@@ -145,8 +156,75 @@
         }
       });
 
+      $("#agregarBalon").on("click", function () {
+        if (!balonAgregado) {
+          costoTotal += 4000;
+          balonAgregado = true;
+          actualizarTotal();
+          $(this).prop("disabled", true);
+        }
+      });
+
+      $("#agregarLuz").on("click", function () {
+        if (!luzAgregada) {
+          costoTotal += 2000;
+          luzAgregada = true;
+          actualizarTotal();
+          $(this).prop("disabled", true);
+        }
+      });
+
+
+      function actualizarEstadoReserva() {
+        if (reservaData) {
+          $.ajax({
+            url: `http://127.0.0.1:8000/api/reservas/${reservaId}/`,
+            method: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              ...reservaData,
+              estado: 2
+            }),
+            success: function () {
+              window.location.href = `reservalista.html?id=${reservaId}`;
+            },
+            error: function (error) {
+              console.error('Error al actualizar el estado de la reserva:', error);
+            }
+          });
+        }
+      }
+      function registrarPago() {
+        const fechaPago = new Date().toISOString();
+
+        $.ajax({
+          url: 'http://127.0.0.1:8000/api/pagos/',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            reserva: reservaId,
+            monto: costoTotal,
+            fecha_pago: fechaPago,
+            metodo_pago: 'Crédito'
+          }),
+          success: function () {
+            window.location.href = `reservalista.html?id=${reservaId}`;
+          },
+          error: function (error) {
+            console.error('Error al registrar el pago:', error);
+          }
+        });
+      }
+
+      $("#pagarBtn").on("click", function () {
+        registrarPago()
+        actualizarEstadoReserva()
+      });
     });
+
   </script>
+
+
 </body>
 
 </html>

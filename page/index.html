@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
-
 <body>
     <nav class="navbar navbar-expand-md bg-body-tertiary">
         <div class="container-fluid">
@@ -25,43 +24,128 @@
         <div class="row text-center justify-content-center m-0 h-100 align-items-center">
             <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light mt-5">
                 <header>
-                    <h2 class="mb-3">Iniciar sesión</h2>
-                    <div class="opacity-75 h6 text-start">
+                    <h3 class="mb-3">Iniciar sesión</h3>
+                    <div class="opacity-75 h5 text-start">
                         <p class="mb-2">¡Bienvenido a CanchaEasy!</p>
-                        <p class="m-0">Por favor, ingresa tus datos</p>
+                        <p class="m-0">Por favor, ingresa tus datos:</p>
                     </div>
                 </header>
                 <main>
-                    <form id="loginForm" class="text-start" action="deportes.html">
+                    <form id="loginForm" class="text-start">
                         <div class="my-2">
                             <label for="email" class="my-2">Correo electrónico</label>
-
                             <input type="email" id="email" class="form-control p-2 rounded-5 m-0 shadow-none border"
                                 required>
                         </div>
-                        <div>
-                            <label for="email" class="my-2">Contraseña</label>
-                            <input type="password" class="form-control p-2 rounded-5 m-0 shadow-none border" required>
+                        <div class="my-2">
+                            <label for="password" class="my-2">Contraseña</label>
+                            <input type="password" id="password"
+                                class="form-control p-2 rounded-5 m-0 shadow-none border" required>
+                            <div id="error" class="text-danger text-center mt-2"></div>
                         </div>
                         <div class="recordar d-flex justify-content-between my-3">
                             <div class="my-2">
                                 <input type="checkbox"><span class="opacity-75"> Recuérdame</span>
                             </div>
-                            <input class="btn btn-primary" type="submit" value="Ingresar">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>
                         </div>
                     </form>
                     <div class="my-3">
                         <span>¿No tienes cuenta?</span><a href="registro.html"> Registrate aquí</a><br>
-                        <a href="recuperar_password.html">Olvidé mi contraseña</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#recuperarPasswordModal">Olvidé mi
+                            contraseña</a>
                     </div>
                 </main>
             </div>
-
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-            crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="recuperarPasswordModal" tabindex="-1" aria-labelledby="recuperarPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title" id="recuperarPasswordModalLabel">Recuperar contraseña</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="recuperarPasswordForm" class="text-start">
+                        <div class="opacity-75 h5 text-start">
+                            <p class="m-0">Ingresa tu correo:</p>
+                        </div>
+                        <div class="my-2">
+                            <label for="recuperarEmail" class="mb-2">Correo electrónico</label>
+                            <input type="email" id="recuperarEmail"
+                                class="form-control p-2 rounded-5 m-0 shadow-none border" required>
+                        </div>
+                        <div class="d-flex justify-content-end my-3">
+                            <input class="btn btn-primary px-4 rounded-5" type="submit" id="recuperarBtn"
+                                value="Enviar">
+                        </div>
+                        <div id="recuperarError" class="text-danger text-center mt-2"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').on('submit', function (event) {
+                event.preventDefault();
+                const email = $('#email').val();
+                const password = $('#password').val();
+
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/api/login/',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                    success: function (response) {
+                        localStorage.setItem('estáAutenticado', 'true');
+                        localStorage.setItem('esEmpleado', response.es_empleado);
+
+                        if (response.es_empleado) {
+                            window.location.href = 'ad_reservas.html';
+                        } else {
+                            window.location.href = 'deportes.html';
+                        }
+                    },
+                    error: function () {
+                        $('#error').text('Credenciales inválidas');
+                    }
+                });
+            });
+
+            $('#recuperarPasswordForm').on('submit', function (event) {
+                event.preventDefault();
+                const email = $('#recuperarEmail').val();
+
+                // Aquí debes agregar la lógica para manejar la recuperación de contraseña
+                // como enviar una solicitud AJAX a tu API para el proceso de recuperación
+
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/api/recuperar-password/',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ email: email }),
+                    success: function () {
+                        $('#recuperarError').text('Revisa tu correo para las instrucciones de recuperación.');
+                    },
+                    error: function () {
+                        $('#recuperarError').text('No se pudo enviar el correo de recuperación.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

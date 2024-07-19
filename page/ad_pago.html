@@ -7,11 +7,11 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 
-</head> <!--Links de bootstrap y del CSS-->
-
-<body> <!--Encabezado y logo-->
+<body>
   <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="inicio.html">
@@ -23,80 +23,63 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-link active mx-2" aria-current="page" href="ad_canchas.html">Canchas</a>
-            <a class="nav-link mx-2" href="ad_perfil.html">Perfil</a>
-            <a class="nav-link mx-2" href="ad_reservas.html">Reservas</a>
-            <a class="nav-link mx-2" href="ad_usuarios.html">Usuarios</a>
-            <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+          <a class="nav-link active mx-2" aria-current="page" href="ad_canchas.html">Canchas</a>
+          <a class="nav-link mx-2" href="ad_pago.html">Pagos</a>
+          <a class="nav-link mx-2" href="ad_reservas.html">Reservas</a>
+          <a class="nav-link mx-2" href="ad_usuarios.html">Usuarios</a>
+          <a class="nav-link mx-2" href="ad_perfil.html">Perfil</a>
+          <a class="nav-link mx-2" id="cerrarSesion" href="index.html">Cerrar sesión</a>
         </div>
       </div>
     </div>
   </nav>
-  <div class="row text-center justify-content-center m-0 align-items-center mt-5">
-    <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light">
-        <h1>Pagos Mensuales por Canchas</h1>
-        <div id="listaPagos"></div>
-    </div>
+  <div class="container my-5">
+    <h3 class="bg-white py-3 px-4 text-center rounded">Lista de Pagos</h3>
+    <table class="table table-light table-bordered text-center">
+      <thead class="table-light" style="background-color: #e1e1e1;">
+        <tr>
+          <th>ID Reserva</th>
+          <th>Monto</th>
+          <th>Fecha de Pago</th>
+          <th>Método de Pago</th>
+        </tr>
+      </thead>
+      <tbody id="tablaPagos"></tbody>
+    </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            const nombresMeses = [
-                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-            ];
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: 'http://127.0.0.1:8000/api/pagos',
+        method: 'GET',
+        success: function (response) {
+          response.forEach(pago => {
+            const fecha = new Date(pago.fecha_pago);
+            const dia = String(fecha.getDate()).padStart(2, '0');
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Meses en formato 1-12
+            const anio = fecha.getFullYear();
+            const fechaFormateada = `${dia}/${mes}/${anio}`;
+            const montoFormateado = `$${pago.monto.toLocaleString('es-CL')}`;
 
-            // Hacer la solicitud GET para obtener todos los pagos
-            $.ajax({
-                url: 'http://127.0.0.1:8000/api/pagos',
-                method: 'GET',
-                success: function (response) {
-                    // Filtrar y agrupar los pagos por mes
-                    const pagosPorMes = {};
+            const row = $('<tr></tr>');
+            row.append(`<td>${pago.reserva}</td>`);
+            row.append(`<td>${montoFormateado}</td>`);
+            row.append(`<td>${fechaFormateada}</td>`);
+            row.append(`<td>${pago.metodo_pago}</td>`);
+            $('#tablaPagos').append(row);
+          });
+        },
+        error: function (error) {
+          console.error('Error al obtener los pagos:', error);
+        }
+      });
+    });
+  </script>
 
-                    response.forEach(function (pago) {
-                        const fecha = new Date(pago.fecha);
-                        const mes = nombresMeses[fecha.getMonth()];
-                        const anio = fecha.getFullYear();
-                        const mesAnio = `${mes} ${anio}`;
-
-                        if (!pagosPorMes[mesAnio]) {
-                            pagosPorMes[mesAnio] = [];
-                        }
-
-                        pagosPorMes[mesAnio].push(pago);
-                    });
-
-                    // Mostrar los pagos en la página
-                    for (const mesAnio in pagosPorMes) {
-                        const pagos = pagosPorMes[mesAnio];
-
-                        // Crear el contenedor para cada mes
-                        const mesContainer = $('<div class="mes-container"></div>');
-                        mesContainer.append(`<h2>${mesAnio}</h2>`);
-
-                        pagos.forEach(function (pago) {
-                            const pagoElement = $('<div class="pago"></div>');
-                            pagoElement.append(`<strong>ID Pago:</strong> ${pago.id_pago}<br>`);
-                            pagoElement.append(`<strong>Fecha:</strong> ${pago.fecha}<br>`);
-                            pagoElement.append(`<strong>Cancha:</strong> ${pago.cancha}<br>`);
-                            pagoElement.append(`<strong>Monto:</strong> ${pago.monto}<br>`);
-                            mesContainer.append(pagoElement);
-                        });
-
-                        // Agregar el contenedor del mes al div principal
-                        $('#listaPagos').append(mesContainer);
-                    }
-                },
-                error: function (error) {
-                    console.error('Error al obtener los pagos:', error);
-                }
-            });
-        });
-    </script>
-
+  <script src="../scripts/auth.js"></script>
 
 </body>
 
