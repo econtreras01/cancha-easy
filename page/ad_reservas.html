@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cancha-easy!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head> <!--Links de bootstrap y del CSS-->
+
+<body> <!--Encabezado y logo-->
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="inicio.html">
+        <img src="../img/icon.svg" alt="Logo" height="50" class="d-inline-block align-text-top">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-link active mx-2" aria-current="page" href="ad_canchas.html">Canchas</a>
+            <a class="nav-link mx-2" href="ad_pago.html">Pagos</a>
+            <a class="nav-link mx-2" href="ad_perfil.html">Perfil</a>
+            <a class="nav-link mx-2" href="ad_usuarios.html">Usuarios</a>
+            <a class="nav-link mx-2" href="index.html">Cerrar sesión</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="row text-center justify-content-center m-0 align-items-center mt-5">
+    <div class="col-8 col-md-5 col-xl-4 col-xxl-4 p-4 px-xxl-5 rounded-4 shadow bg-light">
+        <h1>Lista de Reservas</h1>
+        <ul id="listaReservas"></ul>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            const nombresMeses = [
+                "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+
+            // Hacer la solicitud GET para obtener todas las reservas
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api/reservas',
+                method: 'GET',
+                success: function (response) {
+                    // Iterar sobre las reservas y mostrarlas en la lista
+                    response.forEach(reserva => {
+                        const fecha = new Date(reserva.fecha);
+                        const dia = fecha.getDate();
+                        const mes = nombresMeses[fecha.getMonth()];
+                        const anio = fecha.getFullYear();
+
+                        // Crear el elemento de lista para cada reserva
+                        const listItem = $('<li></li>');
+                        listItem.append(`<strong>ID Reserva:</strong> ${reserva.id_reserva}<br>`);
+                        listItem.append(`<strong>Fecha:</strong> ${dia} de ${mes} de ${anio}<br>`);
+                        listItem.append(`<strong>Hora Inicio:</strong> ${reserva.hora_inicio}<br>`);
+                        listItem.append(`<strong>Hora Término:</strong> ${reserva.hora_fin}<br>`);
+
+                        // Obtener el nombre del usuario desde api/usuarios
+                        $.ajax({
+                            url: `http://127.0.0.1:8000/api/usuarios/${reserva.usuario}`,
+                            method: 'GET',
+                            success: function (usuarioResponse) {
+                                listItem.append(`<strong>Nombre Reserva:</strong> ${usuarioResponse.nombre} ${usuarioResponse.apellido}<br>`);
+                            },
+                            error: function (error) {
+                                console.error('Error al obtener el nombre del reservante:', error);
+                            }
+                        });
+
+                        // Agregar el elemento de lista al UL
+                        $('#listaReservas').append(listItem);
+                    });
+                },
+                error: function (error) {
+                    console.error('Error al obtener las reservas:', error);
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
